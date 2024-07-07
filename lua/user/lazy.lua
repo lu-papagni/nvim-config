@@ -15,13 +15,21 @@ require("lazy").setup({
   ui = {
     border = "rounded"
   },
+  performance = {
+    cache = { enabled = true },
+    -- reset_packpath = true,
+  },
+  change_detection = {
+    enable = false,
+    notify = false
+  },
   spec = {
+    { import = "user.themes" },
     { import = "user.plugins" },
     { import = "user.plugins.lsp" },
     { import = "user.plugins.debugger" },
     { import = "user.plugins.syntax" },
     { import = "user.plugins.interface" },
     { import = "user.plugins.completion" },
-    { import = "user.themes" },
   }
 })

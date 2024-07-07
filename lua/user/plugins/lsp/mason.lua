@@ -2,7 +2,7 @@ return {
     "williamboman/mason.nvim",
     dependencies = { "williamboman/mason-lspconfig.nvim" },
     cmd = { "Mason", "MasonInstall" },
-    event = { "BufReadPre", "VeryLazy" },
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
         local mason = require("mason")
         local lspconfig = require("mason-lspconfig")

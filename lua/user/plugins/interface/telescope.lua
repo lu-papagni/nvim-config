@@ -1,6 +1,20 @@
 return {
   'nvim-telescope/telescope.nvim',
-  event = "UIEnter",
+  keys = {
+    { '<leader>/', function()
+      require("telescope.builtin").current_buffer_fuzzy_find(
+        require("telescope.themes").get_dropdown({
+          previewer = false,
+        })
+      )
+    end
+    },
+    { '<leader>ff',       '<cmd>Telescope find_files<cr>' },
+    { '<leader>fd',       '<cmd>Telescope live_grep<cr>' },
+    { '<leader>fu',       '<cmd>Telescope grep_string<cr>' },
+    { '<leader><leader>', '<cmd>Telescope buffers<cr>' },
+  },
+  -- event = "UIEnter",
   branch = '0.1.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -39,26 +53,25 @@ return {
           case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
           -- the default case_mode is "smart_case"
         }
-      }
-
+      },
     })
 
     telescope.load_extension("fzf")
 
-    local builtin = require("telescope.builtin")
-    -- Telescope shortcuts
-    vim.keymap.set('n', "<leader>ff", builtin.find_files)
-    vim.keymap.set('n', "<leader>fd", builtin.live_grep)
-    vim.keymap.set('n', "<leader>fu", builtin.grep_string)
-    vim.keymap.set('n', "<leader>/", function()
-      builtin.current_buffer_fuzzy_find(
-        require("telescope.themes").get_dropdown({
-          previewer = false,
-        })
-      )
-    end
-    )
-    vim.keymap.set('n', "<leader>:", builtin.command_history)
-    vim.keymap.set('n', "<leader><leader>", builtin.buffers)
+    -- local builtin = require("telescope.builtin")
+    -- -- Telescope shortcuts
+    -- vim.keymap.set('n', "<leader>ff", builtin.find_files)
+    -- vim.keymap.set('n', "<leader>fd", builtin.live_grep)
+    -- vim.keymap.set('n', "<leader>fu", builtin.grep_string)
+    -- vim.keymap.set('n', "<leader>/", function()
+    --   builtin.current_buffer_fuzzy_find(
+    --     require("telescope.themes").get_dropdown({
+    --       previewer = false,
+    --     })
+    --   )
+    -- end
+    -- )
+    -- vim.keymap.set('n', "<leader>:", builtin.command_history)
+    -- vim.keymap.set('n', "<leader><leader>", builtin.buffers)
   end
 }

@@ -35,6 +35,4 @@ vim.opt.wrap = false  -- Disabilita wrapping
 
 vim.opt.scrolloff = 9 -- Numero minimo di linee sopra/sotto al cursore
 
-require("netrw").setup {
-  use_devicons = true
-}
+vim.g.c_syntax_for_h = true

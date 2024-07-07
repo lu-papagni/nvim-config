@@ -1,34 +1,33 @@
-local DEFAULT_THEME = "gruvbox-material"
-
 ---@class ThemeSettings
 --- Insieme di impostazioni per l'applicazione di un tema
 local DEFAULT_SETTINGS = {
-  color = DEFAULT_THEME, ---@type string
   foreground = nil, ---@type string|nil
   background = nil, ---@type string|nil
   transparent = true, ---@type boolean
-  mode = 'dark', ---@type 'light'|'dark'|nil
+  force_transparency = false, ---@type boolean
+  mode = 'dark', ---@type 'light'|'dark'
 }
 
-local M = {}
-M.current = nil
-M.mode = nil
+---@class ThemeSettings
+local SETTINGS = {}
+
+local Colorscheme = {}
 
 --- Modifica gli highlight groups relativi a TreeSitter
 ---@param theme string|nil Nome del tema
-local function EditTextObjects(theme)
-  theme = (theme or M.current) or DEFAULT_THEME
+local function edit_text_objects(theme)
   if theme == "gruvbox-material" then
     vim.api.nvim_set_hl(0, "TSPunctBracket", { link = "Grey" })
-    --vim.api.nvim_set_hl(0, "FloatBorder", { link = "Grey" })
   end
 end
 
 --- Rende il tema trasparente
-local function ToggleTransparency()
-  if M.current == 'gruvbox-material' then
-    vim.g.gruvbox_material_transparent_background = not vim.g.gruvbox_material_transparent_background
-  else
+Colorscheme.toggle_transparency = function()
+  local theme = Colorscheme.current
+  local transparent = SETTINGS[theme].transparent
+  local force = SETTINGS[theme].force_transparency
+
+  if not transparent and force then
     local highlightGroups = {
       "Normal",
       "NormalFloat",
@@ -41,51 +40,64 @@ local function ToggleTransparency()
     end
   end
 
-  vim.cmd.colorscheme(M.current)
-  EditTextObjects(M.current)
+  SETTINGS[theme].transparent = not transparent
+
+  vim.cmd.colorscheme(theme)
+  edit_text_objects(theme)
 end
 
-local function ToggleMode()
-  if M.mode == 'dark' then
-    M.mode = 'light'
-  else
-    M.mode = 'dark'
-  end
+Colorscheme.toggle_mode = function()
+  local mode = vim.o.background
 
-  vim.o.background = M.mode
-  EditTextObjects(M.current)
+  vim.o.background = mode == 'dark' and 'light' or 'dark'
 end
 
 --- Applica il tema scelto a nvim
----@param settings ThemeSettings
-local function ApplyTheme(settings)
-  settings = settings or DEFAULT_SETTINGS
-  local theme = settings.color or DEFAULT_THEME
+Colorscheme.setup = function(opts)
+  for theme, settings in pairs(opts) do
+    SETTINGS[theme] = {}
+    SETTINGS[theme].mode = settings.mode or DEFAULT_SETTINGS.mode
+    SETTINGS[theme].transparent = settings.transparent or DEFAULT_SETTINGS.transparent
+    SETTINGS[theme].force_transparency = settings.force_transparency or DEFAULT_SETTINGS.force_transparency
+    SETTINGS[theme].background = settings.background
+    SETTINGS[theme].foreground = settings.foreground
+  end
+end
 
-  vim.o.background = settings.mode or 'dark'
-  M.current = theme
-  M.mode = settings.mode
+Colorscheme.before = function(theme)
+  Colorscheme.current = theme
 
   if theme == "gruvbox-material" then
+    vim.g.gruvbox_material_transparent_background = SETTINGS[theme].transparent
     vim.g.gruvbox_material_better_performance = 1
-    vim.g.gruvbox_material_background = settings.background or 'medium'
-    vim.g.gruvbox_material_foreground = settings.foreground or 'material'
+    vim.g.gruvbox_material_background = SETTINGS[theme].background or 'mix'
+    vim.g.gruvbox_material_foreground = SETTINGS[theme].foreground or 'mix'
     vim.g.gruvbox_material_enable_bold = 1
     vim.g.gruvbox_material_show_eob = 0
     vim.g.gruvbox_material_float_style = 'bright'
     vim.g.gruvbox_material_diagnostic_text_highlight = 1
-
-    if settings.transparent then
-      ToggleTransparency()
-    end
   end
-
-  vim.cmd.colorscheme(theme)
-  EditTextObjects(theme)
 end
 
-M.apply = ApplyTheme
-M.toggleMode = ToggleMode
-M.toggleTransparency = ToggleTransparency
+---Applica le impostazioni rispetto allo schema colori corrente
+Colorscheme.after = function()
+  local theme = Colorscheme.current
+  local want_transparency = DEFAULT_SETTINGS.transparent
+  local mode = DEFAULT_SETTINGS.mode
 
-return M
+  if SETTINGS[theme] then
+    want_transparency = SETTINGS[theme].transparent
+    mode = SETTINGS[theme].mode
+  end
+
+  vim.o.background = mode
+
+  -- BUG:La trasparenza non si attiva sempre
+  if want_transparency then
+    Colorscheme.toggle_transparency()
+  end
+
+  edit_text_objects(theme)
+end
+
+return Colorscheme

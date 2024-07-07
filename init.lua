@@ -1,18 +1,7 @@
--- Impostazione del tema
-local Colorscheme = require("user.macro.colorscheme")
-
----@type ThemeSettings
-local theme_settings = {
-  color = "gruvbox-material",
-  transparent = true,
-  background = 'mix',
-  foreground = 'mix',
-  mode = 'dark'
-}
-
-require("user.keymaps")
+require("user.core.keymaps")
+require("user.core.options")
 require("user.lazy")
-require("user.options")
-require("user.snippets")
+require("user.core.autocmd")
+require("user.core.usercmd")
 
-Colorscheme.apply(theme_settings)
+vim.cmd.colorscheme('gruvbox-material')

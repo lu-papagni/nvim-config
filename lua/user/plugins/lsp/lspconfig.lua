@@ -5,8 +5,6 @@ return {
         "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-        require("neodev").setup({})
-
         local lspconfig = require("lspconfig")
         local cmp_lsp = require("cmp_nvim_lsp")
 

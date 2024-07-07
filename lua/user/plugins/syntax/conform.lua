@@ -1,6 +1,17 @@
 return {
     "stevearc/conform.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    event = { "BufWritePre" },
+    keys = {
+        -- Formatta intero file in modalità NORMAL o selezione in modalità VISUAL
+        { '<leader>fo', function()
+            require("conform").format({
+                lsp_fallback = true,
+                async = false,
+                timeout_ms = 500
+            })
+        end
+        }
+    },
     config = function()
         local conform = require("conform")
         local mason = require("user.macro.mason-ensure")
