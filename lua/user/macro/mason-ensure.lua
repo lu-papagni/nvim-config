@@ -8,10 +8,11 @@ local MASON_PATH = vim.fn.stdpath('data') .. '/mason'
 ---@return string
 local function get_module_path(module)
   local mod_path = MASON_PATH .. '/bin/' .. module
+  local ext = '.cmd'
 
   if not IS_UNIX then
     -- rendi il percorso compatibile con Windows
-    mod_path = (mod_path .. '.bat'):gsub('/', '\\')
+    mod_path = (mod_path .. ext):gsub('/', '\\')
   end
 
   return mod_path
@@ -25,13 +26,14 @@ M.ensure = function(modules)
     local file_exists = vim.fn.filereadable
 
     for _, modname in ipairs(modules) do
-      if file_exists(get_module_path(modname)) == 0
+      local path = get_module_path(modname)
+      if file_exists(path) == 0
       then
         cmd = cmd .. ' ' .. modname
       end
     end
 
-    if cmd ~= "MasonInstall" then
+    if not cmd == "MasonInstall" then
       vim.cmd(cmd)
     end
   end
