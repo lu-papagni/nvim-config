@@ -9,6 +9,15 @@ return {
             "codelldb",
         })
 
+        dap.adapters.cppdbg = {
+            id = 'cppdbg',
+            type = 'executable',
+            command = vim.fn.exepath('OpenDebugAD7'),
+            options = {
+                detached = false
+            }
+        }
+
         dap.adapters.codelldb = {
             type = 'server',
             port = '${port}',
@@ -20,7 +29,7 @@ return {
 
         dap.configurations.c = {
             {
-                name = 'LLDB: Launch',
+                name = 'LLDB (Unix)',
                 type = 'codelldb',
                 request = 'launch',
                 program = '${workspaceFolder}/${fileBasenameNoExtension}',
@@ -28,7 +37,35 @@ return {
                 stopOnEntry = false,
                 args = {},
                 console = 'integratedTerminal',
-            }
+            },
+            {
+                name = "CPPTOOLS (Windows)",
+                type = "cppdbg",
+                request = "launch",
+                program = '${workspaceFolder}\\${fileBasenameNoExtension}',
+                cwd = '${workspaceFolder}',
+                setupCommands = {
+                    {
+                        description = 'Enable pretty-printing for gdb',
+                        text = '-enable-pretty-printing',
+                        ignoreFailures = false
+                    }
+                },
+                miDebuggerPath = vim.fn.exepath('gdb'),
+                externalConsole = false,
+                MIMode = 'gdb',
+                miDebuggerArgs = '',
+                args = {},
+                environment = {},
+                internalConsoleOptions = 'openOnSessionStart',
+                stopOnEntry = false,
+                logging = {
+                    module = true,
+                    dap = true,
+                    request = true,
+                    responses = true
+                }
+            },
         }
 
         dap.configurations.cpp = dap.configurations.c
