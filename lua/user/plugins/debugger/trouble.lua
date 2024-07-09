@@ -6,8 +6,8 @@ return {
     },
     cmd = 'Trouble',
     keys = {
-        { '<leader>x', '<cmd>Trouble diagnostics toggle<cr>' },
-        { ']x',        '<cmd>Trouble diagnostics next<cr>' },
-        { '[x',        '<cmd>Trouble diagnostics prev<cr>' },
+        { '<leader>dm', '<cmd>Trouble diagnostics toggle<cr>' },
+        { ']d',         '<cmd>Trouble diagnostics next<cr>' },
+        { '[d',         '<cmd>Trouble diagnostics prev<cr>' },
     }
 }
