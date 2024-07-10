@@ -16,7 +16,7 @@ if os.getenv('TERM') == 'xterm-kitty' then
   vim.g.using_kitty_term = true
 
   -- Colori da usare come sfondo di kitty
-  vim.o.background_variants = {
+  vim.g.kitty_background_variants = {
     ['gruvbox-material'] = { dark = '#282828', light = '#f9f5d7' },
     ['onedark'] = { dark = '#282c34', light = '#ffffff' },
     ['kanagawa'] = { dark = '#1f1f28', light = '#f2ecbc' },
@@ -27,7 +27,7 @@ else
 end
 
 -- Opzioni specifiche di Windows
-if vim.fn.has('win32') then
+if vim.fn.has('win32') == 1 then
   vim.o.shell = 'powershell.exe -nologo'
 end
 

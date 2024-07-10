@@ -20,7 +20,7 @@ create_autocmd('ColorScheme', {
   pattern = '*',
   callback = function()
     if vim.g.using_kitty_term then
-      local new_bg = vim.o.background_variants[vim.g.colors_name][vim.o.background]
+      local new_bg = vim.g.kitty_background_variants[vim.g.colors_name][vim.o.background]
       vim.system({ 'kitten', '@', 'set-colors', 'background=' .. new_bg })
     end
 
