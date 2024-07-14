@@ -24,14 +24,8 @@ return {
             }
 
             -- Keybinds
-            opts.desc = "Show LSP references"
-            vim.keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
-
             opts.desc = "Go to declaration"
             vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-
-            opts.desc = "Show LSP definitions"
-            vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
 
             opts.desc = "Show documentation under cursor"
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)

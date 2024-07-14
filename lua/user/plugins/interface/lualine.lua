@@ -1,6 +1,6 @@
 return {
   "nvim-lualine/lualine.nvim",
-  event = { 'BufReadpost', 'BufNewFile' },
+  event = { 'VeryLazy' },
   dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = {
     options = {
@@ -14,7 +14,7 @@ return {
         "dapui_stacks", "dap-repl"
       },
       disabled_filetypes = {
-        'netrw', 'trouble'
+        'netrw', 'trouble', 'alpha'
       },
       always_divide_middle = true,
       globalstatus = false,

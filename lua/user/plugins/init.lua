@@ -5,7 +5,7 @@ return {
   'tpope/vim-sleuth',
   {
     'j-hui/fidget.nvim',
-    event = 'BufReadPre',
+    event = { 'VeryLazy' },
     opts = {}
   },
   {

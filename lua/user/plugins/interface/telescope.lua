@@ -13,8 +13,10 @@ return {
     { '<leader>fd',       '<cmd>Telescope live_grep<cr>' },
     { '<leader>fu',       '<cmd>Telescope grep_string<cr>' },
     { '<leader><leader>', '<cmd>Telescope buffers<cr>' },
+    { 'gd',               '<cmd>Telescope lsp_definitions<cr>' },
+    { 'gR',               '<cmd>Telescope lsp_references<cr>' },
   },
-  -- event = "UIEnter",
+  cmd = 'Telescope',
   branch = '0.1.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
