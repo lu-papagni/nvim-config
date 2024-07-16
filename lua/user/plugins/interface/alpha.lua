@@ -67,7 +67,7 @@ return {
       dashboard.button("e", "  Nuovo", "<CMD>ene <BAR> startinsert <CR>"),
       dashboard.button("f", "  Trova", "<CMD>Telescope find_files<CR>"),
       dashboard.button("r", "  Recenti", "<CMD>Telescope oldfiles<CR>"),
-      dashboard.button("s", "  Impostazioni", "<CMD>e $NVIMRC<CR>"),
+      dashboard.button("s", "  Impostazioni", "<CMD>e " .. vim.fn.stdpath('config') .. "<CR>"),
       dashboard.button("q", "󰅗  Esci", "<CMD>qa<CR>"),
     }
 
