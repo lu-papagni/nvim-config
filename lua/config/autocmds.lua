@@ -25,13 +25,12 @@ vim.api.nvim_create_autocmd("VimLeave", {
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = function()
-    if vim.g.using_kitty_term then
-      local colors, bg = vim.g.colors_name, vim.o.background
+    local colors, bg = vim.g.colors_name, vim.o.background
+    local bg_modes = vim.g.custom_background_variants[colors]
 
-      if vim.g.kitty_background_variants[colors] then
-        local new_bg = vim.g.kitty_background_variants[colors][bg]
-        vim.system({ "kitten", "@", "set-colors", "background=" .. new_bg }, { detach = true })
-      end
+    if bg_modes and vim.g.using_kitty_term then
+      local new_bg = bg_modes[bg]
+      vim.system({ "kitten", "@", "set-colors", "background=" .. new_bg }, { detach = true })
     end
 
     vim.api.nvim_set_hl(0, "TSPunctBracket", { link = "Grey" })
