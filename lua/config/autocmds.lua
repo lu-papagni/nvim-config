@@ -1,3 +1,4 @@
+-- Quando inserisci in basso i commenti non continuano
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
   callback = function()
@@ -5,14 +6,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.api.nvim_create_autocmd("UIEnter", {
-  callback = function()
-    if vim.g.using_kitty_term then
-      vim.system({ "kitten", "@", "set-spacing", "padding=0" }, { detach = true })
-    end
-  end,
-})
-
+-- Reimposta kitty
 vim.api.nvim_create_autocmd("VimLeave", {
   callback = function()
     if vim.g.using_kitty_term then
@@ -22,6 +16,7 @@ vim.api.nvim_create_autocmd("VimLeave", {
   end,
 })
 
+-- Sincronizza il colore di sfondo dei temi con kitty
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = function()
@@ -29,7 +24,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     local bg_modes = vim.g.custom_background_variants[colors]
 
     if bg_modes and vim.g.using_kitty_term then
-      local new_bg = bg_modes[bg]
+      local new_bg = bg_modes[bg] or "#000000"
       vim.system({ "kitten", "@", "set-colors", "background=" .. new_bg }, { detach = true })
     end
 
