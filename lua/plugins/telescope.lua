@@ -13,16 +13,15 @@ return {
   },
   cmd = "Telescope",
   keys = {
-    {
-      "<leader>,",
-      "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
-      desc = "Buffer Recente",
-    },
-    { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Cronologia Comandi" },
-    { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Esegui Comando" },
-    { "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Cerca File Corrente" },
-    { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "File Recenti" },
-    { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
+    { "<leader><space>", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Cerca tra i nomi dei buffer aperti" },
+    { "<leader>;", "<cmd>Telescope command_history<cr>", desc = "Cronologia comandi" },
+    { "<leader>:", "<cmd>Telescope commands<cr>", desc = "Cerca ed esegui comando" },
+    { "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Cerca nel file corrente" },
+    { "<leader>fu", "<cmd>Telescope grep_string<cr>", desc = "Cerca parola sotto il cursore" },
+    { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Lista dei file recenti" },
+    { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Cerca tra i file" },
+    { "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Cerca tra le keymap con descrizione" },
+    { "<leader>fH", "<cmd>Telescope highlights<cr>", desc = "Cerca Highlight Groups" },
   },
   config = function()
     local telescope = require('telescope')
@@ -39,37 +38,26 @@ return {
             ["<down>"] = false,
           }
         },
-        results_title = "Risultati",
       },
       pickers = {
         current_buffer_fuzzy_find = {
-          prompt_title = "Cerca File Corrente",
           layout_config = {
             preview_width = 0.50,
           },
         },
-        oldfiles = {
-          prompt_title = "File Recenti",
+        highlights = {
+          layout_config = {
+            preview_width = 0.60,
+          },
         },
         command_history = {
-          prompt_title = "Cronologia Comandi",
           theme = "ivy",
           layout_config = {
             height = 0.35,
           },
-        },
-        buffers = {
-          prompt_title = "Buffer Recenti",
         },
         commands = {
-          prompt_title = "Esegui Comando",
-          theme = "ivy",
-          layout_config = {
-            height = 0.35,
-          },
-        },
-        keymaps = {
-          prompt_title = "Associazioni Tasti",
+          theme = "dropdown",
         },
       },
       extensions = {
