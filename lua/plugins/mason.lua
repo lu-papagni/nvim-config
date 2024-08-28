@@ -1,7 +1,7 @@
 return {
   {
     "williamboman/mason.nvim",
-    cmd = "Mason",
+    cmd = { "Mason", "MasonInstall" },
     build = ":MasonUpdate",
     opts = {
       ensure_installed = {
@@ -9,19 +9,5 @@ return {
         "shfmt",
       },
     },
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    dependencies = { "williamboman/mason.nvim" },
-    event = 'VeryLazy',
-    opts = {
-      ensure_installed = {
-        "tsserver", -- JavaScript & TypeScript
-        "html",
-        "pyright", -- Python
-        "clangd",  -- C/C++
-      },
-      automatic_installation = true,
-    }
   },
 }

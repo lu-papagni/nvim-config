@@ -29,8 +29,8 @@ return {
         ["<Tab>"] = cmp.mapping(function(fallback) -- Parametro successivo
           if cmp.visible() then
             cmp.select_next_item()
-          elseif luasnip.locally_jumpable(1) then
-            luasnip.jump(1)
+          -- elseif luasnip.locally_jumpable(1) then
+          --   luasnip.jump(1)
           else
             fallback()
           end
@@ -39,8 +39,8 @@ return {
         ["<S-Tab>"] = cmp.mapping(function(fallback) -- Parametro precedente
           if cmp.visible() then
             cmp.select_prev_item()
-          elseif luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
+          -- elseif luasnip.locally_jumpable(-1) then
+          --   luasnip.jump(-1)
           else
             fallback()
           end
@@ -51,24 +51,24 @@ return {
       }),
       formatting = {
         expandable_indicator = true,
-        fields = { 'abbr', 'kind', 'menu' },
-        format = require('lspkind').cmp_format {
-        with_text = true,
-        maxwidth = 50,
-        before = function(_, vim_item)
-          local widths = {
-            menu = 30,
-            abbr = 40
-          }
+        fields = { "abbr", "kind", "menu" },
+        format = require("lspkind").cmp_format {
+          with_text = true,
+          maxwidth = 50,
+          before = function(_, vim_item)
+            local widths = {
+              menu = 30,
+              abbr = 40
+            }
 
-          for key, width in pairs(widths) do
-            if vim_item[key] and vim.fn.strdisplaywidth(vim_item[key]) > width then
-              vim_item[key] = vim.fn.strcharpart(vim_item[key], 0, width - 1) .. "…"
+            for key, width in pairs(widths) do
+              if vim_item[key] and vim.fn.strdisplaywidth(vim_item[key]) > width then
+                vim_item[key] = vim.fn.strcharpart(vim_item[key], 0, width - 1) .. "…"
+              end
             end
-          end
 
-          return vim_item
-        end
+            return vim_item
+          end
         }
       },
       experimental = {

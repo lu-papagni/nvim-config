@@ -1,7 +1,7 @@
 return {
-  'prichrd/netrw.nvim',
+  "prichrd/netrw.nvim",
   dependencies = {
-    'echasnovski/mini.icons',
+    "echasnovski/mini.icons",
     lazy = true,
     init = function()
       package.preload["nvim-web-devicons"] = function()

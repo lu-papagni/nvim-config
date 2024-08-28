@@ -3,10 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     version = false,
     build = ":TSUpdate",
-    -- INFO: Se Vim viene avviato per aprire direttamente almeno un file
-    -- allora `treesitter` non viene caricato in modo asincrono
-    lazy = vim.fn.argc(-1) == 0,
-    event = "VeryLazy",
+    event = { "VeryLazy" },
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     keys = {
       { "<c-space>", desc = "Incrementa selezione contestuale" },
@@ -62,12 +59,12 @@ return {
           enable = true,
           lookahead = true,
           keymaps = {
-            ['aa'] = '@parameter.outer',
-            ['ia'] = '@parameter.inner',
-            ['af'] = '@function.outer',
-            ['if'] = '@function.inner',
-            ['ac'] = '@class.outer',
-            ['ic'] = '@class.inner',
+            ["aa"] = "@parameter.outer",
+            ["ia"] = "@parameter.inner",
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
+            ["ac"] = "@class.outer",
+            ["ic"] = "@class.inner",
           },
         },
       },
@@ -84,6 +81,5 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     event = "VeryLazy",
-    enabled = true,
   },
 }
