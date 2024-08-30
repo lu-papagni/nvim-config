@@ -1,12 +1,14 @@
 return {
   {
-    "neovim/nvim-lspconfig",
-    lazy = true,
-    dependencies = { "hrsh7th/cmp-nvim-lsp" },
-  },
-  {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = { "williamboman/mason.nvim" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      {
+        "neovim/nvim-lspconfig",
+        lazy = true,
+        dependencies = { "hrsh7th/cmp-nvim-lsp" },
+      },
+    },
     event = { "BufReadPre", "VeryLazy" },
     opts = function()
       local cmp_lsp = require("cmp_nvim_lsp")
@@ -19,15 +21,14 @@ return {
 
       return {
         ensure_installed = {
-          "tsserver", -- JavaScript & TypeScript
-          "html",
-          "pyright", -- Python
-          "clangd",  -- C/C++
+          "tsserver",
+          "pyright",
+          "clangd",
         },
         handlers = {
           function(server)
             require("lspconfig")[server].setup {
-              capabilities = require("cmp_nvim_lsp").default_capabilities()
+              capabilities = capabilities
             }
           end,
           ["tsserver"] = function()
@@ -35,7 +36,7 @@ return {
               capabilities = capabilities,
               init_options = {
                 preferences = {
-                  tsserincludeInlayParameterNameHints = 'all',
+                  includeInlayParameterNameHints = "all",
                   includeInlayParameterNameHintsWhenArgumentMatchesName = true,
                   includeInlayFunctionParameterTypeHints = true,
                   includeInlayVariableTypeHints = true,
@@ -45,9 +46,9 @@ return {
                 }
               }
             }
-          end
+          end,
         }
       }
     end
-  }
+  },
 }

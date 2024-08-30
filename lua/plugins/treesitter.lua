@@ -3,7 +3,8 @@ return {
     "nvim-treesitter/nvim-treesitter",
     version = false,
     build = ":TSUpdate",
-    event = { "VeryLazy" },
+    lazy = vim.fn.argc(-1) == 0 or vim.fn.isdirectory(vim.fn.argv(0, -1)) == 1,
+    event = "VeryLazy",
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     keys = {
       { "<c-space>", desc = "Incrementa selezione contestuale" },
@@ -75,7 +76,8 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
-    ft = { "html", "tsx" },
+    ft = { "html", "xml", "tsx", "ts", "js", "php" },
+    -- event = { "BufNewFile", "BufReadPre" },
     opts = {},
   },
   {

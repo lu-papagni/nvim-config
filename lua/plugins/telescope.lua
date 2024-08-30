@@ -5,10 +5,9 @@ return {
     "nvim-lua/plenary.nvim",
     {
       "nvim-telescope/telescope-fzf-native.nvim",
-      build = "make",
-      cond = function()
-        return vim.fn.executable "make" == 1
-      end,
+      enabled = vim.fn.executable("make") == 1 or vim.fn.executable("cmake") == 1,
+      build = vim.fn.executable("make") and "make"
+        or "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
     },
   },
   cmd = "Telescope",

@@ -19,8 +19,9 @@ autocmd("TextYankPost", {
   end
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
-  desc = "LSP actions",
+-- Registra le associazioni tasti per il language server
+autocmd("LspAttach", {
+  desc = "Funzioni LSP",
   callback = function(event)
     local opts = { buffer = event.buf }
 
