@@ -27,12 +27,12 @@ return {
         },
         handlers = {
           function(server)
-            require("lspconfig")[server].setup {
-              capabilities = capabilities
-            }
+            if server ~= "jdtls" then
+              require("lspconfig")[server].setup { capabilities = capabilities }
+            end
           end,
           ["tsserver"] = function()
-            require("lspconfig")["tsserver"].setup {
+            require("lspconfig").ts_ls.setup {
               capabilities = capabilities,
               init_options = {
                 preferences = {
