@@ -21,7 +21,7 @@ return {
 
       return {
         ensure_installed = {
-          "tsserver",
+          "ts_ls",
           "pyright",
           "clangd",
         },
@@ -31,7 +31,7 @@ return {
               require("lspconfig")[server].setup { capabilities = capabilities }
             end
           end,
-          ["tsserver"] = function()
+          ["ts_ls"] = function()
             require("lspconfig").ts_ls.setup {
               capabilities = capabilities,
               init_options = {
@@ -47,6 +47,35 @@ return {
               }
             }
           end,
+          ["clangd"] = function()
+            local cmd = {
+              "clangd",
+              "--background-index",
+              "--clang-tidy",
+              "--header-insertion=iwyu",
+              "--completion-style=detailed",
+              "--function-arg-placeholders",
+              "--fallback-style=llvm",
+            }
+
+            if vim.fn.has("win32") then
+              -- WARNING: Assume che il compilatore sia installato in C:\mingw64\bin
+              vim.list_extend(cmd, {
+                "--query-driver=C:\\mingw64\\bin\\g++.exe",
+                "--query-driver=C:\\mingw64\\bin\\gcc.exe",
+              })
+            end
+
+            require("lspconfig").clangd.setup {
+              capabilities = capabilities,
+              cmd = cmd,
+              init_options = {
+                usePlaceholders = true,
+                completeUnimported = true,
+                clangdFileStatus = true,
+              },
+            }
+          end
         }
       }
     end
