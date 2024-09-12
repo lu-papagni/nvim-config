@@ -59,10 +59,12 @@ return {
             }
 
             if vim.fn.has("win32") then
-              -- WARNING: Assume che il compilatore sia installato in C:\mingw64\bin
+              local gcc = vim.fn.exepath("gcc"):gsub("%.EXE$", ".exe")
+              local gpp = vim.fn.exepath("g++"):gsub("%.EXE$", ".exe")
+
               vim.list_extend(cmd, {
-                "--query-driver=C:\\mingw64\\bin\\g++.exe",
-                "--query-driver=C:\\mingw64\\bin\\gcc.exe",
+                table.concat { "--query-driver=", gcc },
+                table.concat { "--query-driver=", gpp }
               })
             end
 
