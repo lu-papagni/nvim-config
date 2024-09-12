@@ -58,15 +58,13 @@ return {
               "--fallback-style=llvm",
             }
 
-            if vim.fn.has("win32") then
-              local gcc = vim.fn.exepath("gcc"):gsub("%.EXE$", ".exe")
-              local gpp = vim.fn.exepath("g++"):gsub("%.EXE$", ".exe")
+            local gcc = vim.fn.exepath("gcc"):gsub("%.EXE$", ".exe")
+            local gpp = vim.fn.exepath("g++"):gsub("%.EXE$", ".exe")
 
-              vim.list_extend(cmd, {
-                table.concat { "--query-driver=", gcc },
-                table.concat { "--query-driver=", gpp }
-              })
-            end
+            vim.list_extend(cmd, {
+              table.concat { "--query-driver=", gcc },
+              table.concat { "--query-driver=", gpp }
+            })
 
             require("lspconfig").clangd.setup {
               capabilities = capabilities,
