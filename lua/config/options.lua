@@ -15,7 +15,8 @@ vim.o.smartcase = true        -- Disabilita `ignorecase` quando si digita una le
 
 -- Esplora file
 vim.g.netrw_winsize = 30      -- Larghezza esplora file laterale in %
-vim.g.netrw_keepdir = 0       -- Sincronizza la directory di lavoro durante la navigazione
+vim.g.netrw_preview = 1       -- Gli split vengono effettuati in verticale
+-- vim.g.netrw_keepdir = 0    -- Sincronizza la directory di lavoro durante la navigazione
 
 -- Se è aperto in Neovide
 if vim.g.neovide then
@@ -38,4 +39,11 @@ if vim.fn.has("win32") == 1 then
   else
     vim.o.shell = "powershell.exe -nologo"
   end
+end
+
+-- Rimuove i bordi da Kitty
+if os.getenv("TERM") == "xterm-kitty" then
+  vim.schedule(function()
+    vim.system({ "kitten", "@", "set-spacing", "padding=0" }, { detach = true })
+  end)
 end
