@@ -12,6 +12,8 @@ vim.o.scrolloff = 9           -- Numero di righe da mostrare sempre intorno al c
 vim.o.termguicolors = true    -- Supporto per truecolor nel terminale
 vim.o.ignorecase = true       -- I comandi sono case insensitive
 vim.o.smartcase = true        -- Disabilita `ignorecase` quando si digita una lettera maiuscola
+vim.o.splitright = true       -- Gli split verticali compaiono a destra della finestra attiva
+vim.o.splitbelow = true       -- Gli split orizzontali compaiono sotto la finestra attiva
 
 --[[ netrw - Esplora File ]]--
 vim.g.netrw_winsize = 30      -- Larghezza finestre secondarie in %
