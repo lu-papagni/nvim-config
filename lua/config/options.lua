@@ -1,4 +1,4 @@
--- Comportamento
+--[[ Comportamento ]]--
 vim.wo.number = true          -- Attiva numeri di riga
 vim.wo.relativenumber = true  -- Numeri di riga relativi al cursore
 vim.o.hlsearch = false        -- Non evidenziare i risultati dopo la ricerca
@@ -8,17 +8,17 @@ vim.o.tabstop = 2             -- Dimensione del tab = 2 spazi
 vim.o.shiftwidth = 2          -- Dimensione del tab = 2 spazi
 vim.o.expandtab = true        -- Converti TAB in spazi
 vim.o.wrap = false            -- Disabilita a capo automatico
-vim.o.scrolloff = 9           -- Righe da mostrare sempre intorno al cursore
+vim.o.scrolloff = 9           -- Numero di righe da mostrare sempre intorno al cursore
 vim.o.termguicolors = true    -- Supporto per truecolor nel terminale
 vim.o.ignorecase = true       -- I comandi sono case insensitive
 vim.o.smartcase = true        -- Disabilita `ignorecase` quando si digita una lettera maiuscola
 
--- Esplora file
-vim.g.netrw_winsize = 30      -- Larghezza esplora file laterale in %
-vim.g.netrw_preview = 1       -- Gli split vengono effettuati in verticale
--- vim.g.netrw_keepdir = 0    -- Sincronizza la directory di lavoro durante la navigazione
+--[[ netrw - Esplora File ]]--
+vim.g.netrw_winsize = 30      -- Larghezza finestre secondarie in %
+vim.g.netrw_preview = 1       -- Anteprima verticale
+vim.g.netrw_keepdir = 1       -- Sincronizza la directory di lavoro durante la navigazione (1 = off, 0 = off)
 
--- Se è aperto in Neovide
+--[[ Neovide ]]--
 if vim.g.neovide then
   vim.o.guifont = "JetBrainsMono Nerd Font,Consolas:h11"
   vim.g.neovide_refresh_rate = 60
@@ -31,7 +31,7 @@ if vim.g.neovide then
   vim.g.neovide_floating_shadow = false
 end
 
--- Windows
+--[[ Windows ]]--
 if vim.fn.has("win32") == 1 then
   -- Prova a usare PowerShell 7
   if vim.fn.executable("pwsh") == 1 then
@@ -41,7 +41,7 @@ if vim.fn.has("win32") == 1 then
   end
 end
 
--- Rimuove i bordi da Kitty
+--[[ Kitty Terminal ]]-- 
 if os.getenv("TERM") == "xterm-kitty" then
   vim.schedule(function()
     vim.system({ "kitten", "@", "set-spacing", "padding=0" }, { detach = true })
