@@ -3,13 +3,31 @@ return {
   version = false,
   event = "InsertEnter",
   dependencies = {
+    {
+      "L3MON4D3/LuaSnip",
+      build = (function()
+        if vim.fn.has "win32" == 1 or vim.fn.executable "make" == 0 then
+          return
+        end
+        return "make install_jsregexp"
+      end)(),
+      dependencies = {
+        {
+          "rafamadriz/friendly-snippets",
+          config = function()
+            require("luasnip.loaders.from_vscode").lazy_load()
+          end,
+        },
+      },
+    },
+    "saadparwaiz1/cmp_luasnip",
     "hrsh7th/cmp-nvim-lsp",
     "onsails/lspkind.nvim",
-    "hrsh7th/cmp-nvim-lsp-signature-help"
   },
   opts = function()
     local cmp = require("cmp")
     local defaults = require("cmp.config.default")()
+    local luasnip = require("luasnip")
 
     vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
 
@@ -17,8 +35,15 @@ return {
       completion = {
         completeopt = "menu,menuone,noinsert"
       },
+      snippet = {
+        expand = function(args)
+          luasnip.lsp_expand(args.body)
+        end
+      },
       preselect = auto_select and cmp.PreselectMode.Item or cmp.PreselectMode.None,
       mapping = cmp.mapping.preset.insert({
+        ["<up>"] = function() end,   -- disabilita le frecce direzionali
+        ["<down>"] = function() end,
         ["<C-k>"] = cmp.mapping.select_prev_item(),
         ["<C-j>"] = cmp.mapping.select_next_item(),
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -32,20 +57,16 @@ return {
           fallback()
         end,
         ["<Tab>"] = cmp.mapping(function(fallback) -- Parametro successivo
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif vim.snippet.active({ direction = 1 }) then
-            vim.snippet.jump(1)
+          if luasnip.expand_or_locally_jumpable() then
+            luasnip.expand_or_jump()
           else
             fallback()
           end
         end, { "i", "s" }),
 
         ["<S-Tab>"] = cmp.mapping(function(fallback) -- Parametro precedente
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif vim.snippet.active({ direction = -1 }) then
-            vim.snippet.jump(-1)
+          if luasnip.locally_jumpable(-1) then
+            luasnip.jump(-1)
           else
             fallback()
           end
@@ -53,28 +74,17 @@ return {
       }),
       sources = cmp.config.sources({
         { name = "nvim_lsp" },
-        { name = "nvim_lsp_signature_help" },
+        { name = "luasnip" },
       }),
       formatting = {
         expandable_indicator = true,
         fields = { "abbr", "kind", "menu" },
         format = require("lspkind").cmp_format {
-          with_text = true,
-          maxwidth = 50,
-          before = function(_, vim_item)
-            local widths = {
-              menu = 30,
-              abbr = 40
-            }
-
-            for key, width in pairs(widths) do
-              if vim_item[key] and vim.fn.strdisplaywidth(vim_item[key]) > width then
-                vim_item[key] = vim.fn.strcharpart(vim_item[key], 0, width - 1) .. "…"
-              end
-            end
-
-            return vim_item
-          end
+          mode = "symbol",
+          maxwidth = {
+            menu = 40,
+            abbr = 40
+          },
         }
       },
       experimental = {
