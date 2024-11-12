@@ -22,7 +22,7 @@ return {
       return {
         ensure_installed = {
           "ts_ls",
-          "pyright",
+          "jedi_language_server",
           "clangd",
         },
         handlers = {
