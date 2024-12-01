@@ -35,17 +35,25 @@ end
 
 --[[ Windows ]]--
 if vim.fn.has("win32") == 1 then
+  local shell = "cmd.exe"
+  local options = "-nologo"
+
   -- Prova a usare PowerShell 7
   if vim.fn.executable("pwsh") == 1 then
-    vim.o.shell = "pwsh.exe -nologo"
-  else
-    vim.o.shell = "powershell.exe -nologo"
+    shell = "pwsh.exe -nologo"
+  elseif vim.fn.excutable("powershell") then
+    shell = "powershell.exe -nologo"
   end
+
+  vim.o.shell = table.concat({ shell, options }, " ")
 end
 
 --[[ Kitty Terminal ]]-- 
 if os.getenv("TERM") == "xterm-kitty" then
   vim.schedule(function()
-    vim.system({ "kitten", "@", "set-spacing", "padding=0" }, { detach = true })
+    vim.system(
+      { "kitten", "@", "set-spacing", "padding=0" },
+      { detach = true }
+    )
   end)
 end
