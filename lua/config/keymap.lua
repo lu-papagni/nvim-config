@@ -7,9 +7,6 @@ local win_get_height = vim.api.nvim_win_get_height
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
--- Apre esplora file
-map("n", "<leader>e", vim.cmd.Ex, { desc = "Apri esplora file" })
-
 -- Torna in normal mode nel terminale integrato
 map("t", "<ESC><ESC>", "<C-\\><C-n>", { desc = "Torna in normal mode nel terminale integrato", noremap = true })
 
@@ -21,10 +18,10 @@ map({ "n", "v" }, "<A-y>", "\"+y", { desc = "Copia nel buffer di sistema", norem
 map({ "n", "v" }, "<A-p>", "\"+p", { desc = "Incolla dal buffer di sistema", noremap = true })
 
 -- Disabilita le frecce direzionali
-map({ "n", "v", "i" }, "<up>", "<nop>", { noremap = true })
-map({ "n", "v", "i" }, "<down>", "<nop>", { noremap = true })
-map({ "n", "v", "i" }, "<left>", "<nop>", { noremap = true })
-map({ "n", "v", "i" }, "<right>", "<nop>", { noremap = true })
+map({ "n", "v" }, "<up>", "<nop>", { noremap = true })
+map({ "n", "v" }, "<down>", "<nop>", { noremap = true })
+map({ "n", "v" }, "<left>", "<nop>", { noremap = true })
+map({ "n", "v" }, "<right>", "<nop>", { noremap = true })
 
 -- Ridimensiona in step
 map("n", "<C-w><", function()
