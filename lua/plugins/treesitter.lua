@@ -3,9 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     version = false,
     build = ":TSUpdate",
-    -- Avvia TreeSitter in modo sincrono se Vim sta aprendo un file all'avvio
-    lazy = vim.fn.argc(-1) == 0 or vim.fn.isdirectory(vim.fn.argv(0, -1)) == 1,
-    event = "VeryLazy",
+    event = { "BufReadPre",  "VeryLazy" },
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     keys = {
       { "<c-space>", desc = "Incrementa selezione contestuale" },
