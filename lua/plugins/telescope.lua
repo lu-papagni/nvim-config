@@ -1,6 +1,7 @@
 return {
   "nvim-telescope/telescope.nvim",
   branch = "0.1.x",
+  enabled = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
     {
@@ -28,6 +29,12 @@ return {
 
     telescope.setup {
       defaults = {
+        layout_strategy = "vertical",
+        layout_config = {
+          mirror = true,
+          prompt_position = "top",
+          width = 0.8
+        },
         mappings = {
           i = {
             ["<C-j>"] = "move_selection_next",
