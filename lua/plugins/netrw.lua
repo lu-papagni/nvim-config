@@ -1,5 +1,6 @@
 return {
   "prichrd/netrw.nvim",
+  enabled = false,
   dependencies = {
     "echasnovski/mini.icons",
     lazy = true,
