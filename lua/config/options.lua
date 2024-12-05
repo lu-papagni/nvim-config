@@ -40,9 +40,9 @@ if vim.fn.has("win32") == 1 then
 
   -- Prova a usare PowerShell 7
   if vim.fn.executable("pwsh") == 1 then
-    shell = "pwsh.exe -nologo"
+    shell = "pwsh.exe"
   elseif vim.fn.excutable("powershell") then
-    shell = "powershell.exe -nologo"
+    shell = "powershell.exe"
   end
 
   vim.o.shell = table.concat({ shell, options }, " ")
