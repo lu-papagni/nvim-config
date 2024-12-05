@@ -6,7 +6,15 @@ return {
     -- NOTE: uso opzioni custom
     opts = {
       server_settings = {
-        rust_analyzer = {},
+        rust_analyzer = {
+          settings = {
+            ["rust-analyzer"] = {
+              completion = {
+                callable = { snippets = "add_parentheses" }
+              }
+            }
+          }
+        },
         clangd = function()
           local cmd = {
             "clangd",
