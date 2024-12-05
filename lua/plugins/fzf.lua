@@ -77,7 +77,8 @@ return {
     buffers = {
       previewer = false,
       winopts = {
-        width = 0.5
+        width = 0.5,
+        height = 0.4
       }
     }
   }
