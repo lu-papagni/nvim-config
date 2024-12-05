@@ -4,13 +4,11 @@ return {
   config = function()
     local jdtls = require("jdtls")
 
-    local jdtls_install = require("mason-registry")
-      .get_package("jdtls")
-      :get_install_path()
+    local jdtls_install = vim.fn.stdpath("data") .. "/jdtls"
 
     local path = {
       data_dir = vim.fn.stdpath("cache") .. "/nvim-jdtls",
-      java_agent = jdtls_install .. "/lombok.jar",
+      -- java_agent = jdtls_install .. "/lombok.jar",
       launcher_jar = vim.fn.glob(jdtls_install .. "/plugins/org.eclipse.equinox.launcher_*.jar"),
       runtimes = {
         --[[
@@ -41,34 +39,6 @@ return {
       path.platform_config = jdtls_install .. "/config_mac"
     end
 
-    -- Include java-test bundle if present
-    local java_test_path = require("mason-registry")
-      .get_package("java-test")
-      :get_install_path()
-
-    local java_test_bundle = vim.split(
-      vim.fn.glob(java_test_path .. "/extension/server/*.jar"),
-      "\n"
-    )
-
-    if java_test_bundle[1] ~= "" then
-      vim.list_extend(path.bundles, java_test_bundle)
-    end
-
-    -- Include java-debug-adapter bundle if present
-    local java_debug_path = require("mason-registry")
-      .get_package("java-debug-adapter")
-      :get_install_path()
-
-    local java_debug_bundle = vim.split(
-      vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar"),
-      "\n"
-    )
-
-    if java_debug_bundle[1] ~= "" then
-      vim.list_extend(path.bundles, java_debug_bundle)
-    end
-
     local cache_vars = { paths = path }
 
     local data_dir = path.data_dir .. "/" ..  vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
@@ -93,8 +63,7 @@ return {
       "-Declipse.product=org.eclipse.jdt.ls.core.product",
       "-Dlog.protocol=true",
       "-Dlog.level=ALL",
-      "-javaagent:" .. path.java_agent,
-      "-Xms1g",
+      "-Xmx2g",   -- allocazione memoria max
       "--add-modules=ALL-SYSTEM",
       "--add-opens",
       "java.base/java.util=ALL-UNNAMED",
@@ -115,26 +84,16 @@ return {
         --     vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m"
         --   }
         -- },
-        eclipse = {
-          downloadSources = true,
-        },
+        eclipse = { downloadSources = true },
         configuration = {
           updateBuildConfiguration = "interactive",
           runtimes = path.runtimes,
         },
-        maven = {
-          downloadSources = true,
-        },
-        implementationsCodeLens = {
-          enabled = false,
-        },
-        referencesCodeLens = {
-          enabled = false,
-        },
+        maven = { downloadSources = true },
+        implementationsCodeLens = { enabled = false },
+        referencesCodeLens = { enabled = false },
         inlayHints = {
-          parameterNames = {
-            enabled = "none" -- literals, all, none
-          }
+          parameterNames = { enabled = "none" } -- literals, all, none 
         },
         format = {
           enabled = true,
@@ -143,9 +102,7 @@ return {
           -- },
         }
       },
-      signatureHelp = {
-        enabled = true,
-      },
+      signatureHelp = { enabled = true },
       completion = {
         favoriteStaticMembers = {
           "org.hamcrest.MatcherAssert.assertThat",
@@ -157,9 +114,7 @@ return {
           "org.mockito.Mockito.*",
         },
       },
-      contentProvider = {
-        preferred = "fernflower",
-      },
+      contentProvider = { preferred = "fernflower" },
       extendedClientCapabilities = jdtls.extendedClientCapabilities,
       sources = {
         organizeImports = {
@@ -180,8 +135,6 @@ return {
       pattern = { "java" },
       desc = "Setup jdtls",
       callback = function()
-        -- This starts a new client & server,
-        -- or attaches to an existing client & server depending on the `root_dir`.
         jdtls.start_or_attach {
           group = vim.api.nvim_create_augroup("java_cmds", { clear = true }),
           cmd = cmd,
@@ -196,13 +149,16 @@ return {
             vim.keymap.set("x", "crm", function() jdtls.extract_method(true) end, opts)
           end,
           capabilities = cache_vars.capabilities,
-          root_dir = jdtls.setup.find_root {
-            ".git",
-            "mvnw",
-            "gradlew",
-            "pom.xml",
-            "build.gradle",
-          },
+          root_dir = vim.fs.dirname(
+            vim.fs.find({
+              ".git",
+              "mvnw",
+              "gradlew",
+              "pom.xml",
+              "build.gradle",
+            }, { upward = true })[1]
+            or vim.fn.getcwd()
+          ),
           flags = {
             allow_incremental_sync = true,
           },
