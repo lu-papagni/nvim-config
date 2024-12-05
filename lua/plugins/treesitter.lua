@@ -3,7 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     version = false,
     build = ":TSUpdate",
-    event = { "BufReadPre",  "VeryLazy" },
+    event = { "BufNewFile", "BufReadPre", "VeryLazy" },
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     keys = {
       { "<c-space>", desc = "Incrementa selezione contestuale" },
@@ -84,11 +84,10 @@ return {
   {
     "windwp/nvim-ts-autotag",
     ft = { "html", "xml", "tsx", "ts", "js", "php" },
-    -- event = { "BufNewFile", "BufReadPre" },
     opts = {},
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    event = "VeryLazy",
+    event = { "BufNewFile", "BufReadPre", "VeryLazy" },
   },
 }
