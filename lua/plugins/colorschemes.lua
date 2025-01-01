@@ -7,8 +7,25 @@ return {
       transparent = os.getenv("TERM") == "xterm-kitty",
       cache = true,
     },
-    config = function()
-      vim.cmd.colorscheme("tokyonight")
-    end,
+    config = function(_, opts)
+      require("tokyonight").setup(opts)
+      vim.cmd.colorscheme "tokyonight"
+    end
   },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    lazy = true,
+    priority = 1000,
+    opts = {
+      transparent_background = false,
+    }
+  },
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    lazy = true,
+    priority = 1000,
+    opts = {}
+  }
 }
