@@ -4,7 +4,7 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      transparent = os.getenv("TERM") == "xterm-kitty",
+      transparent = os.getenv("WIN_HOME") or os.getenv("TERM") == "xterm-kitty",
       cache = true,
     },
     config = function(_, opts)
