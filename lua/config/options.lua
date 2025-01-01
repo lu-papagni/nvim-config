@@ -14,6 +14,7 @@ vim.o.ignorecase = true       -- I comandi sono case insensitive
 vim.o.smartcase = true        -- Disabilita `ignorecase` quando si digita una lettera maiuscola
 vim.o.splitright = true       -- Gli split verticali compaiono a destra della finestra attiva
 vim.o.splitbelow = true       -- Gli split orizzontali compaiono sotto la finestra attiva
+vim.cmd.colorscheme "tokyonight"  -- Carica il tema colori
 
 --[[ netrw - Esplora File ]]--
 vim.g.netrw_winsize = 30      -- Larghezza finestre secondarie in %
