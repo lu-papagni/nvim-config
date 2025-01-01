@@ -26,7 +26,7 @@ require("lazy").setup({
     enabled = true,
     notify = false,
   },
-performance = {
+  performance = {
     rtp = {
       disabled_plugins = {
         "gzip",
@@ -40,4 +40,5 @@ performance = {
       },
     },
   },
+  ui = { border = "single" }
 })
