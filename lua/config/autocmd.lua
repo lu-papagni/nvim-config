@@ -49,3 +49,15 @@ autocmd("LspAttach", {
     -- map({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, opts)
   end
 })
+
+-- Imposta la trasparenza per alcuni temi
+autocmd("ColorScheme", {
+  desc = "Imposta trasparenza per temi",
+  pattern = require("utils.colorscheme").get_subscribed(),
+  callback = function(_)
+    local color = require("utils.colorscheme")
+    if vim.g.colorscheme_use_transparency then
+      color.fix_transparency({ full = false })
+    end
+  end
+})

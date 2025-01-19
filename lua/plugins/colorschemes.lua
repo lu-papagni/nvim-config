@@ -1,31 +1,40 @@
 return {
   {
     "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
+    lazy = true,
     opts = {
-      transparent = os.getenv("WIN_HOME") or os.getenv("TERM") == "xterm-kitty",
+      transparent = vim.g.colorscheme_use_transparency,
       cache = true,
-    },
-    config = function(_, opts)
-      require("tokyonight").setup(opts)
-      vim.cmd.colorscheme "tokyonight"
-    end
+    }
   },
   {
     "catppuccin/nvim",
     name = "catppuccin",
     lazy = true,
-    priority = 1000,
     opts = {
-      transparent_background = false,
+      transparent_background = vim.g.colorscheme_use_transparency,
     }
   },
   {
     "rose-pine/neovim",
     name = "rose-pine",
     lazy = true,
-    priority = 1000,
     opts = {}
+  },
+  {
+    "AlexvZyl/nordic.nvim",
+    lazy = true,
+    opts = {
+      transparent = {
+        bg = vim.g.colorscheme_use_transparency
+      }
+    }
+  },
+  {
+    "savq/melange-nvim",
+    lazy = true,
+    init = function()
+      require("utils.colorscheme").subscribe { "melange" }
+    end
   }
 }
