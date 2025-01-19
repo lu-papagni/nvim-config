@@ -62,6 +62,11 @@ return {
       function() require("fzf-lua").lsp_references() end,
       desc = "Riferimenti simbolo LSP"
     },
+    {
+      "<space>fC",
+      function() require("fzf-lua").colorschemes() end,
+      desc = "Cerca temi con anteprima"
+    }
   },
   opts = {
     winopts = {
