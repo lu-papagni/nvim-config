@@ -11,7 +11,7 @@ local HI_GROUPS = {
 }
 
 function M.fix_transparency(opts)
-  local hi_groups = HI_GROUPS
+  local hi_groups = vim.deepcopy(HI_GROUPS)
 
   -- Il gruppo `NormalFloat` controlla lo sfondo dei popup
   if opts.full then
