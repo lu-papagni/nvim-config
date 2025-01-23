@@ -15,7 +15,8 @@ return {
     version = false,
     lazy = false,
     keys = {
-      { "<leader>e",
+      {
+        "<leader>e",
         function() require("mini.files").open() end,
         desc = "Apri esplora file (CWD)"
       },
@@ -27,6 +28,16 @@ return {
     },
     opts = {
       options = { use_as_default_explorer = true },
+    }
+  },
+  {
+    "echasnovski/mini.ai",
+    version = false,
+    event = { "BufReadPost", "VeryLazy" },
+    opts = {
+      custom_textobjects = {
+        f = false     -- il default di treesitter funziona meglio
+      }
     }
   },
 }
