@@ -66,6 +66,11 @@ return {
       "<space>fC",
       function() require("fzf-lua").colorschemes() end,
       desc = "Cerca temi con anteprima"
+    },
+    {
+      "<leader>fh",
+      function() require("fzf-lua").helptags() end,
+      desc = "Cerca nel manuale di Neovim"
     }
   },
   opts = {
