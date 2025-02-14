@@ -48,6 +48,23 @@ if vim.fn.has("win32") == 1 then
   vim.o.shell = table.concat({ shell, options }, " ")
 end
 
+--[[ WSL ]]--
+if vim.fn.has("wsl") == 1 and vim.fn.executable("win32yank.exe") then
+  -- Strumento per sincronizzare la clipboard tra WSL e Windows
+  vim.g.clipboard = {
+    name = "win32yank-wsl",
+    copy = {
+      ["+"] = "win32yank.exe -i --crlf",
+      ["*"] = "win32yank.exe -i --crlf"
+    },
+    paste = {
+      ["+"] = "win32yank.exe -o --lf",
+      ["*"] = "win32yank.exe -o --lf"
+    },
+    cache_enabled = true
+  }
+end
+
 --[[ Kitty Terminal ]]-- 
 if os.getenv("TERM") == "xterm-kitty" then
   vim.schedule(function()
