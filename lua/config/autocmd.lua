@@ -53,11 +53,13 @@ autocmd("LspAttach", {
 -- Imposta la trasparenza per alcuni temi
 autocmd("ColorScheme", {
   desc = "Imposta trasparenza per temi",
-  pattern = require("utils.colorscheme").get_subscribed(),
-  callback = function(_)
-    local color = require("utils.colorscheme")
-    if vim.g.colorscheme_use_transparency then
-      color.fix_transparency({ full = false })
+  pattern = "*",
+  callback = function(data)
+    local colorutils = require("utils.colorscheme")
+    local subscribed = colorutils.get_subscribed()
+
+    if subscribed[data.match] then
+      colorutils.apply(data.match)
     end
   end
 })
