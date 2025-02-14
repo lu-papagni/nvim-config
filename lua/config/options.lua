@@ -1,6 +1,3 @@
---[[ Globali custom ]] --
-vim.g.colorscheme_use_transparency = (os.getenv("WIN_HOME") or os.getenv("TERM") == "xterm-kitty") and true or false
-
 --[[ Comportamento ]]--
 vim.wo.number = true          -- Attiva numeri di riga
 vim.wo.relativenumber = true  -- Numeri di riga relativi al cursore

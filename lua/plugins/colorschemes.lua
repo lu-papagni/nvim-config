@@ -2,18 +2,12 @@ return {
   {
     "folke/tokyonight.nvim",
     lazy = true,
-    opts = {
-      transparent = vim.g.colorscheme_use_transparency,
-      cache = true,
-    }
+    opts = { cache = true }
   },
   {
     "catppuccin/nvim",
     name = "catppuccin",
     lazy = true,
-    opts = {
-      transparent_background = vim.g.colorscheme_use_transparency,
-    }
   },
   {
     "rose-pine/neovim",
@@ -24,17 +18,9 @@ return {
   {
     "AlexvZyl/nordic.nvim",
     lazy = true,
-    opts = {
-      transparent = {
-        bg = vim.g.colorscheme_use_transparency
-      }
-    }
   },
   {
     "savq/melange-nvim",
     lazy = true,
-    init = function()
-      require("utils.colorscheme").subscribe { "melange" }
-    end
   }
 }
