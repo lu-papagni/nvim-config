@@ -1,19 +1,19 @@
 local M = {}
 
 -- Contiene i nomi di temi che hanno richiesto modifiche
-local SUBSCRIBED = {}
+local _subscribed = {}
 
 -- ID dei gruppi di cui fare l'override
-local HI_GROUPS = {
+local _hi_groups = {
   "Normal",
   "NormalNC",
   "NonText",
   "EndOfBuffer"
 }
 
-local SERVICES = {
+local _services = {
   fix_transparency = function(opts)
-    local hi_groups = vim.deepcopy(HI_GROUPS)
+    local hi_groups = vim.deepcopy(_hi_groups)
 
     -- Il gruppo `NormalFloat` controlla lo sfondo dei popup
     if opts.full then
@@ -27,9 +27,9 @@ local SERVICES = {
 }
 
 function M.apply(theme)
-  for service, opts in pairs(SUBSCRIBED[theme]) do
+  for service, opts in pairs(_subscribed[theme]) do
     if opts then
-      local ok, err = pcall(SERVICES[service], opts)
+      local ok, err = pcall(_services[service], opts)
 
       if not ok then
         vim.notify("Errore durante il servizio " .. service .. " per il tema " .. theme)
@@ -39,7 +39,7 @@ function M.apply(theme)
 end
 
 local function fix_transparency(opts)
-  local hi_groups = vim.deepcopy(HI_GROUPS)
+  local hi_groups = vim.deepcopy(_hi_groups)
 
   -- Il gruppo `NormalFloat` controlla lo sfondo dei popup
   if opts.full then
@@ -52,11 +52,11 @@ local function fix_transparency(opts)
 end
 
 function M.subscribe(theme_spec)
-  SUBSCRIBED = vim.tbl_extend("force", SUBSCRIBED, theme_spec)
+  _subscribed = vim.tbl_extend("force", _subscribed, theme_spec)
 end
 
 function M.get_subscribed()
-  return vim.deepcopy(SUBSCRIBED)
+  return vim.deepcopy(_subscribed)
 end
 
 return M
