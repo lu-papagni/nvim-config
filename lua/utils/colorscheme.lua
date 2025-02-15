@@ -40,19 +40,6 @@ function M.apply(theme)
   end
 end
 
-local function fix_transparency(opts)
-  local hi_groups = vim.deepcopy(_hi_groups)
-
-  -- Il gruppo `NormalFloat` controlla lo sfondo dei popup
-  if opts.full then
-    vim.list_extend(hi_groups, { "NormalFloat" } )
-  end
-
-  for _, group in ipairs(hi_groups) do
-    vim.api.nvim_set_hl(0, group, { bg = "none" })
-  end
-end
-
 -- Aggiunge un tema alla lista di quelli da modificare
 -- theme_spec è una tabella con chiave il nome del tema
 -- e come valore una lista di servizi con parametri del servizio.
