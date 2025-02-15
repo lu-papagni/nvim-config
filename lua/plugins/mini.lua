@@ -11,6 +11,7 @@ return {
   },
   { 
     "echasnovski/mini.files",
+    cond = vim.g.git_editor ~= 1,
     dependencies = "echasnovski/mini.icons",
     version = false,
     lazy = false,

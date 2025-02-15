@@ -1,5 +1,6 @@
 return {
   "lewis6991/gitsigns.nvim",
+  cond = vim.g.git_editor ~= 1,
   keys = {
     {
       "]h",

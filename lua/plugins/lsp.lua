@@ -1,6 +1,7 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    cond = vim.g.git_editor ~= 1,
     dependencies = { "hrsh7th/cmp-nvim-lsp" },
     event = { "BufNewFile", "BufReadPost", "VeryLazy" },
     -- NOTE: uso opzioni custom
@@ -95,6 +96,7 @@ return {
   },
   {
     "ray-x/lsp_signature.nvim",
+    cond = vim.g.git_editor ~= 1,
     event = "VeryLazy",
     opts = {
       doc_lines = 5,
