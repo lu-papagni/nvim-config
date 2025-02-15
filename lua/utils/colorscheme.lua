@@ -11,6 +11,7 @@ local _hi_groups = {
   "EndOfBuffer"
 }
 
+-- Funzioni dei servizi offerti
 local _services = {
   fix_transparency = function(opts)
     local hi_groups = vim.deepcopy(_hi_groups)
@@ -26,6 +27,7 @@ local _services = {
   end
 }
 
+-- Applica tutte le modifiche richieste dal tema
 function M.apply(theme)
   for service, opts in pairs(_subscribed[theme]) do
     if opts then
@@ -51,10 +53,21 @@ local function fix_transparency(opts)
   end
 end
 
+-- Aggiunge un tema alla lista di quelli da modificare
+-- theme_spec è una tabella con chiave il nome del tema
+-- e come valore una lista di servizi con parametri del servizio.
+-- ESEMPIO:
+-- {
+--   ["<nome_tema>"] = {
+--     <servizio1> = { [<arg1> = <val1>, [<argn> = <valn>]...] },
+--     ...
+--   }
+-- }
 function M.subscribe(theme_spec)
   _subscribed = vim.tbl_extend("force", _subscribed, theme_spec)
 end
 
+-- Restituisce una copia della lista dei temi 'iscritti'
 function M.get_subscribed()
   return vim.deepcopy(_subscribed)
 end
