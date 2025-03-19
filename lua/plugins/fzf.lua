@@ -90,6 +90,12 @@ return {
         width = 0.5,
         height = 0.4
       }
+    },
+    keymap = {
+      fzf = {
+        -- Invia tutti i risultati alla quickfix list
+        ["ctrl-q"] = "select-all+accept",
+      }
     }
   }
 }
