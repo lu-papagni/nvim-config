@@ -49,19 +49,24 @@ if vim.fn.has("win32") == 1 then
 end
 
 --[[ WSL ]]--
-if vim.fn.has("wsl") == 1 and vim.fn.executable("win32yank.exe") then
-  -- Strumento per sincronizzare la clipboard tra WSL e Windows
+if vim.fn.has("wsl") == 1 then
+  local function paste()
+    return {
+      vim.fn.split(vim.fn.getreg(""), "\n"),
+      vim.fn.getregtype(""),
+    }
+  end
+
   vim.g.clipboard = {
-    name = "win32yank-wsl",
+    name = "OSC 52",
     copy = {
-      ["+"] = "win32yank.exe -i --crlf",
-      ["*"] = "win32yank.exe -i --crlf"
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
     },
     paste = {
-      ["+"] = "win32yank.exe -o --lf",
-      ["*"] = "win32yank.exe -o --lf"
+      ["+"] = paste,
+      ["*"] = paste,
     },
-    cache_enabled = true
   }
 end
 
