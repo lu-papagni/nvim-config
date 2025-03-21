@@ -1,3 +1,6 @@
+--[[ Aspetto ]]--
+vim.g.ui_border_style = "rounded"    -- Stile dei bordi dell'interfaccia. Vedi :h nvim_open_win()
+
 --[[ Comportamento ]]--
 vim.wo.number = true          -- Attiva numeri di riga
 vim.wo.relativenumber = true  -- Numeri di riga relativi al cursore
