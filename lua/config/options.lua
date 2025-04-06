@@ -1,4 +1,5 @@
 --[[ Aspetto ]]--
+-- TODO: modificare in `vim.o.winborder` alla v0.11
 vim.g.ui_border_style = "rounded"    -- Stile dei bordi dell'interfaccia. Vedi :h nvim_open_win()
 
 --[[ Comportamento ]]--
