@@ -4,7 +4,7 @@ return {
   keys = {
     {
       "<leader><space>",
-      function() require("fzf-lua").buffers { sort_lastused = true } end,
+      function() require("fzf-lua").buffers() end,
       desc = "Cerca tra i nomi dei buffer aperti"
     },
     {
@@ -71,6 +71,11 @@ return {
       "<leader>fh",
       function() require("fzf-lua").helptags() end,
       desc = "Cerca nel manuale di Neovim"
+    },
+    {
+      "<leader>dm",
+      function() require("fzf-lua").diagnostics_workspace() end,
+      desc = "Mostra messaggi di diagnostica"
     }
   },
   opts = {
@@ -82,6 +87,19 @@ return {
       previewer = false,
       winopts = {
         width = 0.5
+      }
+    },
+    lsp = {
+      code_actions = {
+        previewer = false,
+        winopts = {
+          width = 0.5
+        }
+      }
+    },
+    diagnostics = {
+      winopts = {
+        preview = { layout = "vertical" }
       }
     },
     buffers = {
