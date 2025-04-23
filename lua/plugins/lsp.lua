@@ -2,7 +2,14 @@ return {
   {
     "neovim/nvim-lspconfig",
     cond = vim.g.git_editor ~= 1,
-    dependencies = { "hrsh7th/cmp-nvim-lsp" },
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      {
+        "zeioth/garbage-day.nvim",
+        event = "VeryLazy",
+        opts = {}
+      },
+    },
     event = { "BufNewFile", "BufReadPost", "VeryLazy" },
     -- NOTE: uso opzioni custom
     opts = {
