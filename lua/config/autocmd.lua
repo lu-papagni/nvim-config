@@ -16,7 +16,7 @@ autocmd("VimLeave", {
 autocmd("FileType", {
   pattern = "*",
   callback = function()
-    vim.o.formatoptions = "jcrql"
+    vim.opt.formatoptions:remove { "o" }
   end
 })
 
