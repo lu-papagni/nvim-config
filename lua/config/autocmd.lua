@@ -8,8 +8,6 @@ autocmd("VimLeave", {
     if os.getenv("TERM") == "xterm-kitty" then
       -- vim.system({ "kitten", "@", "set-colors", "--reset", "--all" }, { detach = true })
       vim.system({ "kitten", "@", "set-spacing", "padding=default" }, { detach = true })
-    elseif vim.fn.has("wsl") == 1 then
-      vim.cmd [[set guicursor= | call chansend(v:stderr, "\x1b[ q")]]
     end
   end,
 })
