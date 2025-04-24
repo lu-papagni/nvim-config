@@ -39,17 +39,15 @@ end
 
 --[[ Windows ]]--
 if vim.fn.has("win32") == 1 then
-  local shell = "cmd.exe"
-  local options = "-nologo"
-
   -- Prova a usare PowerShell 7
-  if vim.fn.executable("pwsh") == 1 then
-    shell = "pwsh.exe"
-  elseif vim.fn.excutable("powershell") then
-    shell = "powershell.exe"
-  end
+  local shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell"
+  local options = { "-NoLogo" }
 
-  vim.o.shell = table.concat({ shell, options }, " ")
+  vim.o.shell = table.concat {
+    shell,
+    ".exe",
+    table.concat(options, " ")
+  }
 end
 
 --[[ WSL ]]--
