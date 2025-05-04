@@ -4,7 +4,7 @@ return {
   keys = {
     {
       "<leader><space>",
-      function() require("fzf-lua").buffers { sort_lastused = true } end,
+      function() require("fzf-lua").buffers() end,
       desc = "Cerca tra i nomi dei buffer aperti"
     },
     {
@@ -71,11 +71,15 @@ return {
       "<leader>fh",
       function() require("fzf-lua").helptags() end,
       desc = "Cerca nel manuale di Neovim"
+    },
+    {
+      "<leader>dm",
+      function() require("fzf-lua").diagnostics_workspace() end,
+      desc = "Mostra messaggi di diagnostica"
     }
   },
   opts = {
     winopts = {
-      border = "single",
       preview = { default = "bat" }
     },
     oldfiles = {
@@ -84,11 +88,30 @@ return {
         width = 0.5
       }
     },
+    lsp = {
+      code_actions = {
+        previewer = false,
+        winopts = {
+          width = 0.5
+        }
+      }
+    },
+    diagnostics = {
+      winopts = {
+        preview = { layout = "vertical" }
+      }
+    },
     buffers = {
       previewer = false,
       winopts = {
         width = 0.5,
         height = 0.4
+      }
+    },
+    keymap = {
+      fzf = {
+        -- Invia tutti i risultati alla quickfix list
+        ["ctrl-q"] = "select-all+accept",
       }
     }
   }

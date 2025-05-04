@@ -15,6 +15,9 @@ vim.o.smartcase = true        -- Disabilita `ignorecase` quando si digita una le
 vim.o.splitright = true       -- Gli split verticali compaiono a destra della finestra attiva
 vim.o.splitbelow = true       -- Gli split orizzontali compaiono sotto la finestra attiva
 
+--[[ Aspetto ]]--
+vim.o.winborder = "rounded"   -- Stile dei bordi dell'interfaccia. Vedi `vim.o.winborder`
+
 --[[ netrw - Esplora File ]]--
 vim.g.netrw_winsize = 30      -- Larghezza finestre secondarie in %
 vim.g.netrw_preview = 1       -- Anteprima verticale
@@ -35,33 +38,36 @@ end
 
 --[[ Windows ]]--
 if vim.fn.has("win32") == 1 then
-  local shell = "cmd.exe"
-  local options = "-nologo"
-
   -- Prova a usare PowerShell 7
-  if vim.fn.executable("pwsh") == 1 then
-    shell = "pwsh.exe"
-  elseif vim.fn.excutable("powershell") then
-    shell = "powershell.exe"
-  end
+  local shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell"
+  local options = { "-NoLogo" }
 
-  vim.o.shell = table.concat({ shell, options }, " ")
+  vim.o.shell = table.concat {
+    shell,
+    ".exe",
+    table.concat(options, " ")
+  }
 end
 
 --[[ WSL ]]--
-if vim.fn.has("wsl") == 1 and vim.fn.executable("win32yank.exe") then
-  -- Strumento per sincronizzare la clipboard tra WSL e Windows
+if vim.fn.has("wsl") == 1 then
+  local function paste()
+    return {
+      vim.fn.split(vim.fn.getreg(""), "\n"),
+      vim.fn.getregtype(""),
+    }
+  end
+
   vim.g.clipboard = {
-    name = "win32yank-wsl",
+    name = "OSC 52",
     copy = {
-      ["+"] = "win32yank.exe -i --crlf",
-      ["*"] = "win32yank.exe -i --crlf"
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
     },
     paste = {
-      ["+"] = "win32yank.exe -o --lf",
-      ["*"] = "win32yank.exe -o --lf"
+      ["+"] = paste,
+      ["*"] = paste,
     },
-    cache_enabled = true
   }
 end
 

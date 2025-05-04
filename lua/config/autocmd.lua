@@ -15,7 +15,7 @@ autocmd("VimLeave", {
 autocmd("FileType", {
   pattern = "*",
   callback = function()
-    vim.o.formatoptions = "jcrql"
+    vim.opt.formatoptions:remove { "o" }
   end
 })
 
@@ -39,11 +39,9 @@ autocmd("LspAttach", {
     map("n", "gD", vim.lsp.buf.declaration, opts)
     map("n", "gi", vim.lsp.buf.implementation, opts)
     map("n", "go", vim.lsp.buf.type_definition, opts)
-    -- map("n", "gr", vim.lsp.buf.references, opts)
     map("n", "gs", vim.lsp.buf.signature_help, opts)
-    map("n", "<leader>rn", vim.lsp.buf.rename, opts)
-    map({"n", "x"}, "<leader>cf", function() vim.lsp.buf.format({ async = true }) end, opts)
-    -- map({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, opts)
+    map("n", "gcr", vim.lsp.buf.rename, opts)
+    map({"n", "x"}, "gcf", function() vim.lsp.buf.format({ async = true }) end, opts)
   end
 })
 

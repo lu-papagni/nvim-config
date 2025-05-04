@@ -2,7 +2,14 @@ return {
   {
     "neovim/nvim-lspconfig",
     cond = vim.g.git_editor ~= 1,
-    dependencies = { "hrsh7th/cmp-nvim-lsp" },
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      {
+        "zeioth/garbage-day.nvim",
+        event = "VeryLazy",
+        opts = {}
+      },
+    },
     event = { "BufNewFile", "BufReadPost", "VeryLazy" },
     -- NOTE: uso opzioni custom
     opts = {
@@ -57,7 +64,6 @@ return {
         ["textDocument/hover"] = vim.lsp.with(
           vim.lsp.handlers.hover,
           {
-            border = "single",
             max_width = 80,
             max_height = 15
           }
@@ -101,7 +107,6 @@ return {
     opts = {
       doc_lines = 5,
       floating_window = true,
-      handler_opts = { border = "single" },
       hint_enable = false,
       hint_prefix = "\u{ea92} ",
     }

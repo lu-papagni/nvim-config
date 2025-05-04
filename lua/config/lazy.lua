@@ -1,3 +1,5 @@
+vim.g.maplocalleader = "\\"
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -43,5 +45,8 @@ require("lazy").setup({
       },
     },
   },
-  ui = { border = "single" }
+  ui = {
+    border = vim.o.winborder,
+    title = " Lazy "
+  }
 })
