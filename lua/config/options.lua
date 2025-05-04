@@ -1,7 +1,3 @@
---[[ Aspetto ]]--
--- TODO: modificare in `vim.o.winborder` alla v0.11
-vim.g.ui_border_style = "rounded"    -- Stile dei bordi dell'interfaccia. Vedi :h nvim_open_win()
-
 --[[ Comportamento ]]--
 vim.wo.number = true          -- Attiva numeri di riga
 vim.wo.relativenumber = true  -- Numeri di riga relativi al cursore
@@ -18,6 +14,9 @@ vim.o.ignorecase = true       -- I comandi sono case insensitive
 vim.o.smartcase = true        -- Disabilita `ignorecase` quando si digita una lettera maiuscola
 vim.o.splitright = true       -- Gli split verticali compaiono a destra della finestra attiva
 vim.o.splitbelow = true       -- Gli split orizzontali compaiono sotto la finestra attiva
+
+--[[ Aspetto ]]--
+vim.o.winborder = "rounded"   -- Stile dei bordi dell'interfaccia. Vedi `vim.o.winborder`
 
 --[[ netrw - Esplora File ]]--
 vim.g.netrw_winsize = 30      -- Larghezza finestre secondarie in %

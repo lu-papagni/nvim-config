@@ -46,7 +46,7 @@ require("lazy").setup({
     },
   },
   ui = {
-    border = vim.g.ui_border_style,
+    border = vim.o.winborder,
     title = " Lazy "
   }
 })

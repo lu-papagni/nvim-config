@@ -64,7 +64,6 @@ return {
         ["textDocument/hover"] = vim.lsp.with(
           vim.lsp.handlers.hover,
           {
-            border = vim.g.ui_border_style,
             max_width = 80,
             max_height = 15
           }
@@ -108,7 +107,6 @@ return {
     opts = {
       doc_lines = 5,
       floating_window = true,
-      handler_opts = { border = vim.g.ui_border_style },
       hint_enable = false,
       hint_prefix = "\u{ea92} ",
     }

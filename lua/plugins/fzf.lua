@@ -80,7 +80,6 @@ return {
   },
   opts = {
     winopts = {
-      border = vim.g.ui_border_style,
       preview = { default = "bat" }
     },
     oldfiles = {
