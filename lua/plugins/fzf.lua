@@ -8,11 +8,6 @@ return {
       desc = "Cerca tra i nomi dei buffer aperti"
     },
     {
-      "<leader>;",
-      function() require("fzf-lua").command_history() end,
-      desc = "Cronologia comandi"
-    },
-    {
       "<leader>:",
       function() require("fzf-lua").commands() end,
       desc = "Cerca ed esegui comando"
@@ -54,7 +49,7 @@ return {
     },
     {
       "<leader>ca",
-      function() require("fzf-lua").lsp_code_actions() end,
+      function() require("fzf-lua").lsp_code_actions { silent = true } end,
       desc = "Azioni consigliate LSP"
     },
     {
