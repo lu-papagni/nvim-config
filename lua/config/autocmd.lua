@@ -1,4 +1,5 @@
 local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 local map = vim.keymap.set
 
 -- Resetta le impostazioni grafiche di Kitty
@@ -23,7 +24,7 @@ autocmd("FileType", {
 -- Evidenzia brevemente il testo quando viene copiato
 autocmd("TextYankPost", {
   desc = "Evidenzia brevemente il testo durante la copia",
-  group = vim.api.nvim_create_augroup("my-highlight-yank", { clear = true }),
+  group = augroup("my-highlight-yank", { clear = true }),
   callback = function()
     vim.highlight.on_yank()
   end
@@ -57,5 +58,14 @@ autocmd("ColorScheme", {
     if subscribed[data.match] then
       colorutils.apply(data.match)
     end
+  end
+})
+
+-- Elimina i buffer vuoti creati da netrw
+autocmd("FileType", {
+  group = augroup("AutoDeleteNetrwHiddenBuffers", { clear = true }),
+  pattern = "netrw",
+  callback = function()
+    vim.opt_local.bufhidden = "wipe"
   end
 })

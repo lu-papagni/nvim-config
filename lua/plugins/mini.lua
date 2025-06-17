@@ -9,28 +9,6 @@ return {
       end
     end,
   },
-  { 
-    "echasnovski/mini.files",
-    cond = vim.g.git_editor ~= 1,
-    dependencies = "echasnovski/mini.icons",
-    version = false,
-    lazy = false,
-    keys = {
-      {
-        "<leader>e",
-        function() require("mini.files").open() end,
-        desc = "Apri esplora file (CWD)"
-      },
-      {
-        "<leader>E",
-        function() require("mini.files").open(vim.api.nvim_buf_get_name(0)) end,
-        desc = "Apri esplora file (Buffer Corrente)"
-      },
-    },
-    opts = {
-      options = { use_as_default_explorer = true },
-    }
-  },
   {
     "echasnovski/mini.ai",
     version = false,

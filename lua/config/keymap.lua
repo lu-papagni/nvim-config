@@ -20,7 +20,7 @@ local function resize_win(increase, dim, factor)
 end
 
 -- Imposta il tasto master
-vim.g.mapleader = " "
+vim.g.mapleader = vim.keycode("<space>")
 
 -- Torna in normal mode nel terminale integrato
 map("t", "<ESC><ESC>", "<C-\\><C-n>", { desc = "Torna in normal mode nel terminale integrato", noremap = true })
@@ -31,6 +31,10 @@ map("n", "<leader>q", vim.cmd.bd, { desc = "Chiudi buffer corrente" })
 -- Copia/incolla nel buffer di sistema
 map({ "n", "v" }, "<A-y>", "\"+y", { desc = "Copia nel buffer di sistema", noremap = true })
 map({ "n", "v" }, "<A-p>", "\"+p", { desc = "Incolla dal buffer di sistema", noremap = true })
+
+-- Apri l'esplora file
+map("n", "<leader>e", vim.cmd.Lexplore, { desc = "Apri netrw", noremap = true })
+map("n", "<leader>E", function() vim.cmd.Lexplore(vim.fn.expand("%:p:h")) end, { desc = "Apri netrw", noremap = true })
 
 -- Disabilita le frecce direzionali
 map({ "n", "v" }, "<up>", "<nop>", { noremap = true })
