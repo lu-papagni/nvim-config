@@ -2,14 +2,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     cond = vim.g.git_editor ~= 1,
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      {
-        "zeioth/garbage-day.nvim",
-        event = "VeryLazy",
-        opts = {}
-      },
-    },
+    dependencies = { "hrsh7th/cmp-nvim-lsp" },
     event = { "BufNewFile", "BufReadPost", "VeryLazy" },
     -- NOTE: uso opzioni custom
     opts = {
@@ -48,6 +41,7 @@ return {
         pyright = {},
         ts_ls = {
           init_options = {
+            locale = "it",
             preferences = {
               includeInlayParameterNameHints = "all",
               includeInlayParameterNameHintsWhenArgumentMatchesName = true,
@@ -86,7 +80,10 @@ return {
         if type(settings) == "function" then settings = settings() end
 
         if vim.fn.executable(server) == 1 then
-          lsp[name].setup(
+          vim.lsp.enable(name)
+
+          vim.lsp.config(
+            name,
             vim.tbl_deep_extend(
               "force",
               settings,
@@ -101,14 +98,9 @@ return {
     end
   },
   {
-    "ray-x/lsp_signature.nvim",
+    "zeioth/garbage-day.nvim",
     cond = vim.g.git_editor ~= 1,
-    event = "VeryLazy",
-    opts = {
-      doc_lines = 5,
-      floating_window = true,
-      hint_enable = false,
-      hint_prefix = "\u{ea92} ",
-    }
+    event = "LspAttach",
+    opts = {}
   }
 }

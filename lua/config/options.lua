@@ -15,6 +15,23 @@ vim.o.smartcase = true        -- Disabilita `ignorecase` quando si digita una le
 vim.o.splitright = true       -- Gli split verticali compaiono a destra della finestra attiva
 vim.o.splitbelow = true       -- Gli split orizzontali compaiono sotto la finestra attiva
 
+--[[ Diagnostica ]]--
+vim.diagnostic.config {
+  virtual_text = {
+    severity = {
+      min = vim.diagnostic.severity.INFO,
+      max = vim.diagnostic.severity.WARN
+    },
+    current_line = true
+  },
+  virtual_lines = {
+    severity = {
+      min = vim.diagnostic.severity.ERROR
+    },
+    current_line = true
+  }
+}
+
 --[[ Aspetto ]]--
 vim.o.winborder = "rounded"   -- Stile dei bordi dell'interfaccia. Vedi `vim.o.winborder`
 
