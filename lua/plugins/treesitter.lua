@@ -97,11 +97,13 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
+    dependencies = "nvim-treesitter/nvim-treesitter",
     ft = { "html", "xml", "tsx", "ts", "js", "php", "markdown" },
     opts = {},
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = "nvim-treesitter/nvim-treesitter",
     event = { "BufNewFile", "BufReadPre", "VeryLazy" },
   },
 }
