@@ -11,8 +11,8 @@ function M.use_optionals(spec)
   for _, s in ipairs(spec) do
     if s.enabled == nil or s.enabled then
       local avaiable = s.optional and vim.uv.fs_stat(PLUGIN_PATH .. s.mod)
-      -- Aggiungo il modulo se non è opzionale oppure
-      -- è opzionale ed esiste su disco
+
+      -- Aggiungo il modulo se è obbligatorio oppure è opzionale ma presente
       if not s.optional or avaiable then
         table.insert(new_spec, { import = "plugins." .. s.mod })
       end
