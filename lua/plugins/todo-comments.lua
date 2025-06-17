@@ -1,9 +1,9 @@
 return {
   "folke/todo-comments.nvim",
+  cond = vim.g.git_editor ~= 1,
   cmd = { "TodoTrouble", "TodoTelescope" },
   event = "BufReadPost",
   opts = {},
-  -- stylua: ignore
   keys = {
     { "]t", function() require("todo-comments").jump_next() end, desc = "Promemoria Successivo" },
     { "[t", function() require("todo-comments").jump_prev() end, desc = "Promemoria Precedente" },
