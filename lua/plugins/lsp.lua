@@ -1,4 +1,6 @@
 return {
+  { "hrsh7th/cmp-nvim-lsp", lazy = true },
+  --[[
   {
     "neovim/nvim-lspconfig",
     cond = vim.g.git_editor ~= 1,
@@ -97,6 +99,7 @@ return {
       end
     end
   },
+  ]] --
   {
     "zeioth/garbage-day.nvim",
     cond = vim.g.git_editor ~= 1,
