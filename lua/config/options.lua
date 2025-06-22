@@ -38,8 +38,7 @@ vim.o.winborder = "rounded"   -- Stile dei bordi dell'interfaccia. Vedi `vim.o.w
 --[[ netrw - Esplora File ]]--
 vim.g.netrw_winsize = 30      -- Larghezza finestre secondarie in %
 vim.g.netrw_preview = 1       -- Anteprima verticale
-vim.g.netrw_liststyle = 3     -- Visualizza directory come albero
-vim.g.netrw_banner = 0        -- Nascondi la guida in alto
+vim.g.netrw_keepdir = 1       -- Sincronizza la directory di lavoro durante la navigazione (1 = off, 0 = off)
 
 --[[ Neovide ]]--
 if vim.g.neovide then

@@ -54,7 +54,7 @@ function M.subscribe(theme_spec)
   _subscribed = vim.tbl_extend("force", _subscribed, theme_spec)
 end
 
--- Restituisce una copia della lista dei temi "iscritti"
+-- Restituisce una copia della lista dei temi 'iscritti'
 function M.get_subscribed()
   return vim.deepcopy(_subscribed)
 end
