@@ -11,6 +11,7 @@ return {
   },
   { 
     "echasnovski/mini.files",
+    enabled = not vim.g.vscode,
     cond = vim.g.git_editor ~= 1,
     dependencies = "echasnovski/mini.icons",
     version = false,
@@ -43,6 +44,7 @@ return {
   },
   {
     "echasnovski/mini.indentscope",
+    enabled = not vim.g.vscode,
     version = false,
     init = function()
       vim.api.nvim_create_autocmd("FileType", {
@@ -70,6 +72,7 @@ return {
   },
   {
     "echasnovski/mini.diff",
+    enabled = not vim.g.vscode,
     version = false,
     cond = vim.g.git_editor ~= 1,
     event = { "BufReadPost", "BufNewFile" },
