@@ -59,3 +59,25 @@ autocmd("ColorScheme", {
     end
   end
 })
+
+if vim.g.neovide then
+  -- Cambia il colore della barra
+  autocmd("ColorScheme", {
+    desc = "Imposta il colore della barra di Neovide",
+    callback = function()
+      local bg = vim.api.nvim_get_hl(0, { name = "Normal", link = false }).bg
+      if bg then vim.g.neovide_title_background_color = string.format("#%06x", bg) end
+    end
+  })
+
+  -- Directory di default
+  autocmd("VimEnter", {
+    desc = "Imposta la directory di default all'avvio di Neovide",
+    once = true,
+    callback = function()
+      if vim.fn.argc() == 0 then
+        vim.cmd(string.format("cd %s", vim.g.neovide_starting_directory))
+      end
+    end
+  })
+end

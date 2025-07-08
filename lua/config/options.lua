@@ -42,28 +42,44 @@ vim.g.netrw_keepdir = 1       -- Sincronizza la directory di lavoro durante la n
 
 --[[ Neovide ]]--
 if vim.g.neovide then
-  vim.o.guifont = "JetBrainsMono Nerd Font,Consolas:h11"
   vim.g.neovide_refresh_rate = 60
   vim.g.neovide_refresh_rate_idle = 5
   vim.g.neovide_remember_window_size = true
   vim.g.neovide_cursor_animation_length = 0.10
   vim.g.neovide_cursor_trail_size = 0.5
   vim.g.neovide_cursor_animate_command_line = false
-  vim.g.neovide_transparency = 0.95
+  vim.g.neovide_normal_opacity = 0.95
   vim.g.neovide_floating_shadow = false
+  vim.g.neovide_hide_mouse_when_typing = true
+  vim.g.neovide_starting_directory = os.getenv("USERPROFILE")   -- NOTE: Variabile custom
 end
 
 --[[ Windows ]]--
 if vim.fn.has("win32") == 1 then
   -- Prova a usare PowerShell 7
-  local shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell"
-  local options = { "-NoLogo" }
-
-  vim.o.shell = table.concat {
-    shell,
-    ".exe",
-    table.concat(options, " ")
-  }
+  vim.o.shell = (vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell") .. ".exe"
+  vim.o.shellcmdflag = table.concat(
+    {
+      "-NoLogo",
+      "-ExecutionPolicy",
+      "RemoteSigned",
+      "-Command",
+      "[Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;$PSStyle.Formatting.Error",
+      "=",
+      "'';$PSStyle.Formatting.ErrorAccent",
+      "=",
+      "'';$PSStyle.Formatting.Warning",
+      "=",
+      "'';$PSStyle.OutputRendering",
+      "=",
+      "'PlainText';"
+    },
+    " "
+  )
+  vim.o.shellredir = "2>&1 | Out-File -Encoding utf8 %s; exit $LastExitCode"
+  vim.o.shellpipe = "2>&1 | Out-File -Encoding utf8 %s; exit $LastExitCode"
+  vim.o.shellquote = ""
+  vim.o.shellxquote = ""
 end
 
 --[[ WSL ]]--
