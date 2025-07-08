@@ -5,17 +5,15 @@ local function get_clangd_cmd()
     "--clang-tidy",
     "--header-insertion=never",
     "--completion-style=detailed",
-    "--function-arg-placeholders",
     "--fallback-style=llvm",
     "--function-arg-placeholders=false"
   }
 
-  local gcc = vim.fn.exepath("gcc"):gsub("%.EXE$", ".exe")
-  local gpp = vim.fn.exepath("g++"):gsub("%.EXE$", ".exe")
+  local gcc = vim.fn.exepath("gcc")
 
   vim.list_extend(cmd, {
-    table.concat { "--query-driver=", gcc },
-    table.concat { "--query-driver=", gpp }
+    -- Uso tutti i compilatori disponibili
+    string.format("--query-driver=%s/g*.exe", vim.fn.fnamemodify(gcc, ":h"):gsub("\\", "/"))
   })
 
   return cmd
@@ -61,7 +59,7 @@ if vim.g.git_editor ~= 1 then
           "clangd",
           "rust-analyzer",
           "typescript-language-server",
-          "pyright"
+          "basedpyright"
         }
       end
     }
