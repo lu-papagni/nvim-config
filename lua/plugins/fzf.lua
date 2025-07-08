@@ -74,6 +74,9 @@ return {
     }
   },
   opts = {
+    previewers = {
+      bat = { theme = "base16" }
+    },
     winopts = {
       preview = { default = "bat" }
     },
