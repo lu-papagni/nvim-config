@@ -32,6 +32,10 @@ map("n", "<leader>q", vim.cmd.bd, { desc = "Chiudi buffer corrente" })
 map({ "n", "v" }, "<A-y>", "\"+y", { desc = "Copia nel buffer di sistema", noremap = true })
 map({ "n", "v" }, "<A-p>", "\"+p", { desc = "Incolla dal buffer di sistema", noremap = true })
 
+-- Scorri con cursore centrato
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
+
 -- Disabilita le frecce direzionali
 map({ "n", "v" }, "<up>", "<nop>", { noremap = true })
 map({ "n", "v" }, "<down>", "<nop>", { noremap = true })
