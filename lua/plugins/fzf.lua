@@ -74,6 +74,7 @@ return {
     }
   },
   opts = {
+    defaults = { file_icons = "mini" },
     previewers = {
       bat = { theme = "base16" }
     },
