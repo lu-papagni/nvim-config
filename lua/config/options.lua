@@ -1,57 +1,103 @@
---[[ Comportamento ]]--
-vim.wo.number = true          -- Attiva numeri di riga
-vim.wo.relativenumber = true  -- Numeri di riga relativi al cursore
-vim.o.hlsearch = false        -- Non evidenziare i risultati dopo la ricerca
-vim.o.breakindent = true      -- Mantieni indentazione
-vim.o.undofile = true         -- Annulla operazione anche dopo la riapertura di Vim
-vim.o.tabstop = 2             -- Dimensione del tab = 2 spazi
-vim.o.shiftwidth = 2          -- Dimensione del tab = 2 spazi
-vim.o.expandtab = true        -- Converti TAB in spazi
-vim.o.wrap = false            -- Disabilita a capo automatico
-vim.o.scrolloff = 9           -- Numero di righe da mostrare sempre intorno al cursore
-vim.o.termguicolors = true    -- Supporto per truecolor nel terminale
-vim.o.ignorecase = true       -- I comandi sono case insensitive
-vim.o.smartcase = true        -- Disabilita `ignorecase` quando si digita una lettera maiuscola
-vim.o.splitright = true       -- Gli split verticali compaiono a destra della finestra attiva
-vim.o.splitbelow = true       -- Gli split orizzontali compaiono sotto la finestra attiva
+-- Generale
+vim.o.undofile = true
+vim.opt.path:append("**")
+vim.opt.wildignore:append { "*.o", "*.class", "*.jar", "*.obj", "*.tmp" }
 
---[[ Aspetto ]]--
+-- UI
+vim.wo.number = true
+vim.wo.relativenumber = true
+vim.o.termguicolors = true
+vim.o.scrolloff = 9
+vim.o.wrap = false
+-- vim.o.cursorline = true
+-- vim.o.cursorlineopt = "number"
+
+-- Ricerca
+vim.o.hlsearch = false
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+-- Formattazione
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+vim.o.expandtab = true
+vim.o.breakindent = true
+
+-- Finestre
+vim.o.splitright = true
+vim.o.splitbelow = true
+
+-- Folding
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldlevelstart = 6
+vim.o.foldnestmax = 4
+
+-- Diagnostica
+vim.diagnostic.config {
+  virtual_text = {
+    severity = {
+      min = vim.diagnostic.severity.INFO,
+      max = vim.diagnostic.severity.WARN
+    },
+    current_line = true
+  },
+  virtual_lines = {
+    severity = {
+      min = vim.diagnostic.severity.ERROR
+    },
+    current_line = true
+  }
+}
+
+-- Aspetto
 vim.o.winborder = "rounded"   -- Stile dei bordi dell'interfaccia. Vedi `vim.o.winborder`
 
---[[ netrw - Esplora File ]]--
+-- netrw
 vim.g.netrw_winsize = 30      -- Larghezza finestre secondarie in %
 vim.g.netrw_preview = 1       -- Anteprima verticale
-vim.g.netrw_keepdir = 1       -- Sincronizza la directory di lavoro durante la navigazione (1 = off, 0 = off)
+vim.g.netrw_keepdir = 1       -- Sincronizza la directory di lavoro durante la navigazione
 
---[[ Neovide ]]--
+-- Neovide
 if vim.g.neovide then
-  vim.o.guifont = "JetBrainsMono Nerd Font,Consolas:h11"
   vim.g.neovide_refresh_rate = 60
   vim.g.neovide_refresh_rate_idle = 5
   vim.g.neovide_remember_window_size = true
   vim.g.neovide_cursor_animation_length = 0.10
   vim.g.neovide_cursor_trail_size = 0.5
   vim.g.neovide_cursor_animate_command_line = false
-  vim.g.neovide_transparency = 0.95
+  vim.g.neovide_normal_opacity = 0.95
   vim.g.neovide_floating_shadow = false
+  vim.g.neovide_hide_mouse_when_typing = true
 end
 
---[[ Windows ]]--
+-- Solo su Windows
 if vim.fn.has("win32") == 1 then
   -- Prova a usare PowerShell 7
-  local shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell"
-  local options = { "-NoLogo" }
-
-  vim.o.shell = table.concat {
-    shell,
-    ".exe",
-    table.concat(options, " ")
-  }
+  vim.o.shell = (vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell") .. ".exe"
+  vim.o.shellcmdflag = table.concat(
+    {
+      "-NoLogo",
+      "-ExecutionPolicy",
+      "RemoteSigned",
+      "-Command",
+      "[Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
+      "$PSStyle.Formatting.Error='';",
+      "$PSStyle.Formatting.ErrorAccent='';",
+      "$PSStyle.Formatting.Warning='';",
+      "$PSStyle.OutputRendering='PlainText';"
+    },
+    " "
+  )
+  vim.o.shellredir = "2>&1 | Out-File -Encoding utf8 %s; exit $LastExitCode"
+  vim.o.shellpipe = "2>&1 | Out-File -Encoding utf8 %s; exit $LastExitCode"
+  vim.o.shellquote = ""
+  vim.o.shellxquote = ""
 end
 
---[[ WSL ]]--
+-- Solo su WSL
 if vim.fn.has("wsl") == 1 then
-  local function paste()
+  local function wsl_paste()
     return {
       vim.fn.split(vim.fn.getreg(""), "\n"),
       vim.fn.getregtype(""),
@@ -65,13 +111,13 @@ if vim.fn.has("wsl") == 1 then
       ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
     },
     paste = {
-      ["+"] = paste,
-      ["*"] = paste,
+      ["+"] = wsl_paste,
+      ["*"] = wsl_paste,
     },
   }
 end
 
---[[ Kitty Terminal ]]-- 
+-- Kitty Terminal 
 if os.getenv("TERM") == "xterm-kitty" then
   vim.schedule(function()
     vim.system(

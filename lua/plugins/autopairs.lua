@@ -8,6 +8,6 @@ return {
       "minifiles",
       "txt"
     },
-    enable_afterquote = false
+    enable_bracket_in_quote = false
   }
 }

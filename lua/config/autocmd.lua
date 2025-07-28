@@ -58,3 +58,40 @@ autocmd("ColorScheme", {
     end
   end
 })
+
+-- Ridimensiona gli split con la finestra
+autocmd("VimResized", {
+  desc = "Ridimensiona gli split insieme alla finestra",
+  callback = function()
+    if #vim.api.nvim_list_wins() > 1 then
+      vim.cmd.tabdo("wincmd =")
+    end
+  end
+})
+
+-- Autocomandi solo per Neovide
+if vim.g.neovide then
+  local neovide_events = vim.api.nvim_create_augroup("NeovideEvents", { clear = true })
+
+  -- Cambia il colore della barra
+  autocmd("ColorScheme", {
+    desc = "Imposta il colore della barra di Neovide",
+    group = neovide_events,
+    callback = function()
+      local bg = vim.api.nvim_get_hl(0, { name = "Normal", link = false }).bg
+      if bg then vim.g.neovide_title_background_color = string.format("#%06x", bg) end
+    end
+  })
+
+  -- Directory di default
+  autocmd("VimEnter", {
+    desc = "Imposta la directory di default all'avvio di Neovide",
+    group = neovide_events,
+    once = true,
+    callback = function()
+      if vim.fn.argc() == 0 then
+        vim.api.nvim_set_current_dir(vim.env.HOME)
+      end
+    end
+  })
+end

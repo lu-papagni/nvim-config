@@ -20,7 +20,7 @@ local function resize_win(increase, dim, factor)
 end
 
 -- Imposta il tasto master
-vim.g.mapleader = " "
+vim.g.mapleader = vim.keycode("<space>")
 
 -- Torna in normal mode nel terminale integrato
 map("t", "<ESC><ESC>", "<C-\\><C-n>", { desc = "Torna in normal mode nel terminale integrato", noremap = true })
@@ -31,6 +31,10 @@ map("n", "<leader>q", vim.cmd.bd, { desc = "Chiudi buffer corrente" })
 -- Copia/incolla nel buffer di sistema
 map({ "n", "v" }, "<A-y>", "\"+y", { desc = "Copia nel buffer di sistema", noremap = true })
 map({ "n", "v" }, "<A-p>", "\"+p", { desc = "Incolla dal buffer di sistema", noremap = true })
+
+-- Scorri con cursore centrato
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
 
 -- Disabilita le frecce direzionali
 map({ "n", "v" }, "<up>", "<nop>", { noremap = true })
@@ -44,8 +48,21 @@ map("n", "<C-w>>", function() resize_win(true, "width", 1.2) end, { desc = "Aume
 map("n", "<C-w>+", function() resize_win(true, "height", 1.2) end, { desc = "Aumenta altezza della finestra del 20%", noremap = true })
 map("n", "<C-w>-", function() resize_win(false, "height", 1.2) end, { desc = "Riduci altezza della finestra del 20%", noremap = true })
 
--- Mappe specifiche di Neovide
+-- Rimappature specifiche di Neovide
 if vim.g.neovide then
   -- Mette Neovide a schermo intero
-	map("n", "<F11>", function() vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen end, { desc = "Metti Neovide a schermo intero" })
+	map("n", "<F11>",
+    function() vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen end,
+    { desc = "Metti Neovide a schermo intero" }
+  )
+
+  local function new_opacity(step)
+    return math.min(1.0, math.max(0, vim.g.neovide_normal_opacity + step))
+  end
+
+  -- Aumenta l'opacità della finestra
+  map({ "n", "x", "i", "t" }, "<C-ScrollWheelUp>", function() vim.g.neovide_normal_opacity = new_opacity(0.05) end)
+
+  -- Riduce l'opacità della finestra
+  map({ "n", "x", "i", "t" }, "<C-ScrollWheelDown>", function() vim.g.neovide_normal_opacity = new_opacity(-0.05) end)
 end

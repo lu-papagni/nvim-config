@@ -26,7 +26,10 @@ require("lazy").setup({
     },
   },
   install = { colorscheme = { "tokyonight", "default" } },
-  checker = { enabled = true },
+  checker = {
+    enabled = true,
+    frequency = 3600 * 24   -- Controlla una volta al giorno
+  },
   change_detection = {
     enabled = true,
     notify = false,
