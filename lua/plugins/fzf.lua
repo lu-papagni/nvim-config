@@ -71,6 +71,30 @@ return {
       "<leader>dm",
       function() require("fzf-lua").diagnostics_workspace() end,
       desc = "Mostra messaggi di diagnostica"
+    },
+    {
+      -- INFO: sostituisce `todo-comments`
+      "<leader>ft",
+      function()
+        require("fzf-lua").grep {
+          search = [[\bTODO:]],
+          no_esc = true,
+          multiline = true
+        }
+      end,
+      desc = "Trova i commenti di promemoria (TODO)"
+    },
+    {
+      -- INFO: sostituisce `todo-comments`
+      "<leader>fT",
+      function()
+        require("fzf-lua").grep {
+          search = [[\b(HACK|TODO|NOTE|BUG|ERROR|FIXME|FIX|INFO):]],
+          no_esc = true,
+          multiline = true
+        }
+      end,
+      desc = "Trova tutti i commenti di promemoria"
     }
   },
   opts = {

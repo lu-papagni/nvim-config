@@ -26,6 +26,7 @@ return {
         "toml",
         "vim",
         "vimdoc",
+        "comment",
       },
       auto_install = true,
       sync_install = false,
