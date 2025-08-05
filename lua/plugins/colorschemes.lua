@@ -16,7 +16,8 @@ return {
     opts = {}
   },
   {
-    "AlexvZyl/nordic.nvim",
+    -- Sylvan "Vimothy Chalamet" Franklin
+    "vague2k/vague.nvim",
     lazy = true,
   },
   {
