@@ -40,6 +40,7 @@ return {
     "echasnovski/mini.indentscope",
     version = false,
     init = function()
+      -- Disabilita in specifici file e nel terminale integrato
       vim.api.nvim_create_autocmd("FileType", {
         pattern = {
           "fzf",
@@ -50,6 +51,12 @@ return {
         callback = function()
           vim.b.miniindentscope_disable = true
         end,
+      })
+
+      vim.api.nvim_create_autocmd("TermOpen", {
+        callback = function()
+          vim.b.miniindentscope_disable = true
+        end
       })
     end,
     event = { "BufNewFile", "BufReadPost" },
