@@ -5,10 +5,10 @@ return {
     build = ":TSUpdate",
     event = { "BufNewFile", "BufReadPre", "VeryLazy" },
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-    keys = {
-      { "<c-space>", desc = "Incrementa selezione contestuale" },
-      { "<bs>", desc = "Decrementa selezione contestuale", mode = "x" },
-    },
+    -- keys = {
+    --   { "<c-space>", desc = "Incrementa selezione contestuale" },
+    --   { "<bs>", desc = "Decrementa selezione contestuale", mode = "x" },
+    -- },
     opts = {
       highlight = { enable = true },
       indent = { enable = true },
