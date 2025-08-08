@@ -48,6 +48,9 @@ map("n", "<C-w>>", function() resize_win(true, "width", 1.2) end, { desc = "Aume
 map("n", "<C-w>+", function() resize_win(true, "height", 1.2) end, { desc = "Aumenta altezza della finestra del 20%", noremap = true })
 map("n", "<C-w>-", function() resize_win(false, "height", 1.2) end, { desc = "Riduci altezza della finestra del 20%", noremap = true })
 
+-- Scambia velocemente i due buffer più recenti
+map("n", "<leader><space>", "<C-^>")
+
 -- Rimappature specifiche di Neovide
 if vim.g.neovide then
   -- Mette Neovide a schermo intero

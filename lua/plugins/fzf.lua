@@ -3,7 +3,7 @@ return {
   cmd = "FzfLua",
   keys = {
     {
-      "<leader><space>",
+      "<leader>b",
       function() require("fzf-lua").buffers() end,
       desc = "Cerca tra i nomi dei buffer aperti"
     },
