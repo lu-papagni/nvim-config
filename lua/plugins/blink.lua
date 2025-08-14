@@ -1,6 +1,7 @@
 return {
   "saghen/blink.cmp",
   version = "1.*",
+  enabled = vim.g.git_editor ~= 1,
   event = "InsertEnter",
   opts = {
     cmdline = { enabled = false },
