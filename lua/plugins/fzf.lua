@@ -38,6 +38,11 @@ return {
       desc = "Cerca tra i file"
     },
     {
+      "<leader>rc",
+      function() require("fzf-lua").files { cwd = vim.fn.stdpath("config") } end,
+      desc = "Trova file di configurazione"
+    },
+    {
       "<leader>fk",
       function() require("fzf-lua").keymaps() end,
       desc = "Cerca tra le associazioni tasti"
