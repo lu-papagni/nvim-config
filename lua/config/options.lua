@@ -9,8 +9,9 @@ vim.wo.relativenumber = true
 vim.o.termguicolors = true
 vim.o.scrolloff = 9
 vim.o.wrap = false
--- vim.o.cursorline = true
--- vim.o.cursorlineopt = "number"
+vim.o.cursorline = true
+vim.o.cursorlineopt = "line"
+vim.o.statusline = "%{%v:lua.require'statusline'.tostring()%}"
 
 -- Ricerca
 vim.o.hlsearch = false
