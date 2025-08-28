@@ -63,7 +63,7 @@ if vim.g.neovide then
   vim.g.neovide_refresh_rate = 60
   vim.g.neovide_refresh_rate_idle = 5
   vim.g.neovide_remember_window_size = true
-  vim.g.neovide_cursor_animation_length = 0.10
+  vim.g.neovide_cursor_animation_length = 0
   vim.g.neovide_cursor_trail_size = 0.5
   vim.g.neovide_cursor_animate_command_line = false
   vim.g.neovide_normal_opacity = 0.95
