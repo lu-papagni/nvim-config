@@ -56,6 +56,11 @@ map("n", "<C-w>-", function() resize_win("height", -0.2) end,
 -- Scambia velocemente i due buffer più recenti
 map("n", "<leader><space>", "<C-^>", { desc = "Scambia velocemente i due buffer più recenti" })
 
+-- Modifica il tema da chiaro a scuro
+map("n", "<F12>",
+    function() vim.o.background = vim.o.background == "dark" and "light" or "dark" end,
+    { desc = "Modifica il tema da chiaro a scuro" })
+
 -- Rimappature specifiche di Neovide
 if vim.g.neovide then
 	map("n", "<F11>",
