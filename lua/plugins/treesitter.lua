@@ -1,18 +1,11 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    version = false,
+    branch = "main",
     build = ":TSUpdate",
-    event = { "BufNewFile", "BufReadPre", "VeryLazy" },
-    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-    -- keys = {
-    --   { "<c-space>", desc = "Incrementa selezione contestuale" },
-    --   { "<bs>", desc = "Decrementa selezione contestuale", mode = "x" },
-    -- },
-    opts = {
-      highlight = { enable = true },
-      indent = { enable = true },
-      ensure_installed = {
+    lazy = false,
+    config = function()
+      local ensure_installed = {
         "diff",
         "gitcommit",
         "git_config",
@@ -27,71 +20,77 @@ return {
         "vim",
         "vimdoc",
         "comment",
-      },
-      auto_install = true,
-      sync_install = false,
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<C-space>",
-          node_incremental = "<C-space>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
-      },
-      textobjects = {
-        move = {
-          enable = true,
-          goto_next_start = {
-            ["]f"] = "@function.outer",
-            ["]c"] = "@class.outer",
-            ["]a"] = "@parameter.inner"
-          },
-          goto_next_end = {
-            ["]F"] = "@function.outer",
-            ["]C"] = "@class.outer",
-            ["]A"] = "@parameter.inner"
-          },
-          goto_previous_start = {
-            ["[f"] = "@function.outer",
-            ["[c"] = "@class.outer",
-            ["[a"] = "@parameter.inner"
-          },
-          goto_previous_end = {
-            ["[F"] = "@function.outer",
-            ["[C"] = "@class.outer",
-            ["[A"] = "@parameter.inner"
-          },
-        },
-        select = {
-          enable = true,
-          lookahead = true,
-          keymaps = {
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@conditional.outer",
-            ["ic"] = "@conditional.inner",
-            ["al"] = "@loop.outer",
-            ["il"] = "@loop.inner",
-            ["ie"] = "@assignment.rhs",
-            ["iE"] = "@assignment.lhs",
-          },
-        },
-      },
-    },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
+      }
+      require("nvim-treesitter").install(ensure_installed)
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = require("nvim-treesitter").get_installed(),
+        group = vim.api.nvim_create_augroup("my-treesitter", { clear = true }),
+        -- WARNING: non usare mai `callback = vim.treesitter.start`
+        -- altrimenti ci saranno errori nell'apertura dei file.
+        callback = function() vim.treesitter.start() end
+      })
     end,
   },
   {
     "windwp/nvim-ts-autotag",
     dependencies = "nvim-treesitter/nvim-treesitter",
     ft = { "html", "xml", "tsx", "ts", "js", "php", "markdown" },
-    opts = {},
+    config = true
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
     dependencies = "nvim-treesitter/nvim-treesitter",
     event = { "BufNewFile", "BufReadPre", "VeryLazy" },
+    config = function()
+      local textobjects = {
+        select = {
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ac"] = "@conditional.outer",
+          ["ic"] = "@conditional.inner",
+          ["al"] = "@loop.outer",
+          ["il"] = "@loop.inner",
+          ["ie"] = "@assignment.rhs",
+          ["iE"] = "@assignment.lhs",
+          ["aa"] = "@parameter.outer",
+          ["ia"] = "@parameter.inner",
+        },
+        move = {
+          goto_next_start = {
+            ["]f"] = "@function.outer",
+            ["]c"] = "@class.outer",
+            ["]]"] = "@parameter.inner"
+          },
+          goto_next_end = {
+            ["]F"] = "@function.outer",
+            ["]C"] = "@class.outer",
+          },
+          goto_previous_start = {
+            ["[f"] = "@function.outer",
+            ["[c"] = "@class.outer",
+            ["[["] = "@parameter.inner"
+          },
+          goto_previous_end = {
+            ["[F"] = "@function.outer",
+            ["[C"] = "@class.outer",
+          },
+        }
+      }
+
+      for mapping, obj in pairs(textobjects.select) do
+        vim.keymap.set({ "x", "o" }, mapping, function()
+          require("nvim-treesitter-textobjects.select").select_textobject(obj, "textobjects")
+        end)
+      end
+
+      for method, mappings in pairs(textobjects.move) do
+        for mapping, obj in pairs(mappings) do
+          vim.keymap.set({ "n", "x", "o" }, mapping, function()
+            require("nvim-treesitter-textobjects.move")[method](obj, "textobjects")
+          end)
+        end
+      end
+    end
   },
 }

@@ -29,6 +29,7 @@ return {
   {
     "echasnovski/mini.ai",
     version = false,
+    enabled = false,
     event = { "BufReadPost", "VeryLazy" },
     opts = {
       custom_textobjects = {
