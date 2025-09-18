@@ -23,7 +23,13 @@ return {
       }
       require("nvim-treesitter").install(ensure_installed)
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = require("nvim-treesitter").get_installed(),
+        -- Abilita solo per le estensioni supportate dai parser
+        -- NOTE: prima di usare un nuovo parser bisognerà installarlo con
+        -- `:TSInstall` e riavviare neovim.
+        pattern = vim.iter(require("nvim-treesitter").get_installed())
+          :map(function(l) return vim.treesitter.language.get_filetypes(l) end)
+          :flatten()
+          :totable(),
         group = vim.api.nvim_create_augroup("my-treesitter", { clear = true }),
         -- WARNING: non usare mai `callback = vim.treesitter.start`
         -- altrimenti ci saranno errori nell'apertura dei file.
