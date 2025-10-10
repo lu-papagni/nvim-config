@@ -59,7 +59,8 @@ if vim.g.git_editor ~= 1 then
           "clangd",
           "rust-analyzer",
           "typescript-language-server",
-          "basedpyright"
+          "basedpyright",
+          "jdtls",
         }
       end
     }
