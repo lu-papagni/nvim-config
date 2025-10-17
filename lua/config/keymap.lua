@@ -61,6 +61,16 @@ map("n", "<F12>",
     function() vim.o.background = vim.o.background == "dark" and "light" or "dark" end,
     { desc = "Modifica il tema da chiaro a scuro" })
 
+-- Gestisci il terminale fluttuante
+map("n", "<C-\\>", require("popupterm").open, { desc = "Apri terminale fluttuante" })
+map("t", "<C-\\>", function()
+  local term = require("popupterm")
+  if term.is_open then
+    vim.api.nvim_win_close(term.win, false)
+    term.is_open = false
+  end
+end, { desc = "Chiudi il terminale fluttuante" })
+
 -- Rimappature specifiche di Neovide
 if vim.g.neovide then
 	map("n", "<F11>",
