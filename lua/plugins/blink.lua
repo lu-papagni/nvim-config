@@ -14,7 +14,9 @@ return {
     },
     keymap = {
       ["<up>"] = false,
-      ["<down>"] = false
+      ["<down>"] = false,
+      ["<C-j>"] = { "select_next", "fallback" },
+      ["<C-k>"] = { "select_prev", "fallback" },
     }
   }
 }
