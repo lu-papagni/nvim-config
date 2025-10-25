@@ -3,8 +3,12 @@ local StatusLine = {}
 local function file_icon_and_name()
   local fname = vim.fn.expand("%:t")
   if fname:len() > 0 then 
-    local icon, hl, _ = require("mini.icons").get("file", fname)
-    return string.format("%%#%s#%s%%* %s", hl, icon, fname)
+    local ok, icons = pcall(require, "mini.icons")
+    if ok then
+      local icon, hl, _ = icons.get("file", fname)
+      return string.format("%%#%s#%s%%* %s", hl, icon, fname)
+    end
+    return fname
   end
   return "[No Name]"
 end
