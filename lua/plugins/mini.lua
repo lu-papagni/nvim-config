@@ -47,7 +47,8 @@ return {
           "fzf",
           "help",
           "lazy",
-          "qf"
+          "qf",
+          "codecompanion"
         },
         callback = function()
           vim.b.miniindentscope_disable = true
