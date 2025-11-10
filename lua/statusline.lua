@@ -5,7 +5,7 @@ local function file_icon_and_name()
   if fname:len() > 0 then 
     local ok, icons = pcall(require, "mini.icons")
     if ok then
-      local icon, hl, _ = icons.get("file", fname)
+      local icon, hl, _ = icons.get("filetype", vim.bo.filetype)
       return string.format("%%#%s#%s%%* %s", hl, icon, fname)
     end
     return fname
