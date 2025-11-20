@@ -4,6 +4,8 @@ return {
     branch = "main",
     build = ":TSUpdate",
     lazy = false,
+    enable = vim.iter { "cc", "tree-sitter" }
+      :all(function(d) return vim.fn.executable(d) == 1 end),
     config = function()
       local ensure_installed = {
         "diff",
@@ -27,7 +29,7 @@ return {
         -- NOTE: prima di usare un nuovo parser bisognerà installarlo con
         -- `:TSInstall` e riavviare neovim.
         pattern = vim.iter(require("nvim-treesitter").get_installed())
-          :map(function(l) return vim.treesitter.language.get_filetypes(l) end)
+          :map(vim.treesitter.language.get_filetypes)
           :flatten()
           :totable(),
         group = vim.api.nvim_create_augroup("my-treesitter", { clear = true }),
