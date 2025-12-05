@@ -19,12 +19,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  spec = require("utils.lazyspec").use_optionals {
-    {
-      mod = "local",
-      optional = true,
-    },
-  },
+  spec = { { import = "plugins" } },
   install = { colorscheme = { "tokyonight", "default" } },
   checker = {
     enabled = true,

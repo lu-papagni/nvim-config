@@ -46,20 +46,6 @@ autocmd("LspAttach", {
   end
 })
 
--- Imposta la trasparenza per alcuni temi
-autocmd("ColorScheme", {
-  desc = "Imposta trasparenza per temi",
-  pattern = "*",
-  callback = function(data)
-    local colorutils = require("utils.colorscheme")
-    local subscribed = colorutils.get_subscribed()
-
-    if subscribed[data.match] then
-      colorutils.apply(data.match)
-    end
-  end
-})
-
 -- Ridimensiona gli split con la finestra
 autocmd("VimResized", {
   desc = "Ridimensiona gli split insieme alla finestra",
