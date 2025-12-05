@@ -35,7 +35,10 @@ return {
         group = vim.api.nvim_create_augroup("my-treesitter", { clear = true }),
         -- WARNING: non usare mai `callback = vim.treesitter.start`
         -- altrimenti ci saranno errori nell'apertura dei file.
-        callback = function() vim.treesitter.start() end
+        callback = function()
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          vim.treesitter.start()
+        end
       })
     end,
   },
