@@ -2,6 +2,7 @@ return {
   "mason-org/mason.nvim",
   lazy = false,
   config = function()
+    require("mason-registry").update()
     require("mason").setup()
 
     local ensure_installed = { "tree-sitter-cli" }
