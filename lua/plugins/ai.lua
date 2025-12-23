@@ -6,6 +6,9 @@ return {
     opts = {
       filetypes = {
         gitcommit = false,
+      },
+      server = {
+        type = "binary"
       }
     }
   },
