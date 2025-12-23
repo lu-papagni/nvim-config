@@ -1,15 +1,21 @@
+-- returns memory size in KB
+local function get_system_memory()
+  local meminfo = io.open("/proc/meminfo", "r")
+  assert(meminfo, "Could not read memory stats. Are you on Windows?")
+  local line = meminfo:read()
+  meminfo:close()
+  return tonumber(line:match("%d+"))
+end
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
     build = ":TSUpdate",
     lazy = false,
-    enable = vim.iter { "cc", "tree-sitter" }
-      :all(function(d) return vim.fn.executable(d) == 1 end),
     config = function()
       local ensure_installed = {
         "diff",
-        "gitcommit",
         "git_config",
         "gitignore",
         "git_rebase",
@@ -23,7 +29,18 @@ return {
         "vimdoc",
         "comment",
       }
-      require("nvim-treesitter").install(ensure_installed)
+
+      -- WARNING: gitcommit parser needs a lot of memory to compile
+      if get_system_memory() >= 4*1024*1024 then
+        table.insert(ensure_installed, "gitcommit")
+      else
+        vim.notify("Not enough memory to compile `gitcommit`.", vim.log.levels.ERROR)
+      end
+
+      if vim.fn.executable("tree-sitter") == 1 then
+        require("nvim-treesitter").install(ensure_installed)
+      end
+
       vim.api.nvim_create_autocmd("FileType", {
         -- Abilita solo per le estensioni supportate dai parser
         -- NOTE: prima di usare un nuovo parser bisognerà installarlo con
