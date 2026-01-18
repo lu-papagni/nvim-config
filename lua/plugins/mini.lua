@@ -24,7 +24,11 @@ return {
     },
     opts = {
       options = { use_as_default_explorer = true },
-    }
+    },
+    config = function(_, opts)
+      require("mini.files").setup(opts)
+      require("minifiles-git")
+    end
   },
   {
     "echasnovski/mini.ai",
