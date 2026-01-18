@@ -20,7 +20,6 @@ return {
         "gitignore",
         "git_rebase",
         "json",
-        "jsonc",
         "lua",
         "markdown",
         "markdown_inline",
