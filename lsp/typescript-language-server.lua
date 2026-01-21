@@ -70,9 +70,15 @@
 ---
 --- `filetypes` is extended here to include Vue SFC.
 
+local cmd = { "typescript-language-server", "--stdio" }
+
+if vim.fn.executable("bun") then
+  cmd = vim.list_extend({ "bun", "x" }, cmd)
+end
+
 return {
   init_options = { hostInfo = "neovim" },
-  cmd = { "typescript-language-server", "--stdio" },
+  cmd = cmd,
   filetypes = {
     "javascript",
     "javascriptreact",
