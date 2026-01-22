@@ -25,6 +25,13 @@ vim.o.expandtab = true
 vim.o.breakindent = true
 vim.o.smartindent = true
 
+vim.filetype.add {
+  extension = {
+    tmpl = "gotmpl",
+    chezmoiignore = "gitignore"
+  }
+}
+
 -- Finestre
 vim.o.splitright = true
 vim.o.splitbelow = true
