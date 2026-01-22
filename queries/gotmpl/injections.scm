@@ -4,6 +4,7 @@
 ; with format `ft: <lang-name>`
 
 (template
+  .
   (comment) @injection.language
   (#lua-match? @injection.language "^/%* ft: [%w%-_]+ %*/$")
   
