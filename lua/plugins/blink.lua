@@ -3,6 +3,7 @@ return {
   version = "1.*",
   enabled = vim.g.git_editor ~= 1,
   event = "InsertEnter",
+  dependencies = { "fang2hou/blink-copilot" },
   opts = {
     cmdline = { enabled = false },
     completion = {
@@ -10,7 +11,14 @@ return {
       ghost_text = { enabled = true }
     },
     sources = {
-      default = { "lsp", "snippets" }
+      default = { "lsp", "snippets", "copilot" },
+      providers = {
+        copilot = {
+          name = "copilot",
+          module = "blink-copilot",
+          async = true
+        }
+      }
     },
     keymap = {
       ["<up>"] = false,
