@@ -2,15 +2,15 @@ local autocmd = vim.api.nvim_create_autocmd
 local map = vim.keymap.set
 
 -- Resetta le impostazioni grafiche di Kitty
-autocmd("VimLeave", {
-  desc = "Resetta l'aspetto del terminale all'uscita",
-  callback = function()
-    if os.getenv("TERM") == "xterm-kitty" then
+if os.getenv("TERM") == "xterm-kitty" then
+  autocmd("VimLeave", {
+    desc = "Resetta l'aspetto del terminale all'uscita",
+    callback = function()
       -- vim.system({ "kitten", "@", "set-colors", "--reset", "--all" }, { detach = true })
       vim.system({ "kitten", "@", "set-spacing", "padding=default" }, { detach = true })
-    end
-  end,
-})
+    end,
+  })
+end
 
 -- In Normal Mode, inserire una nuova riga dopo un commento non lo continua
 autocmd("FileType", {
