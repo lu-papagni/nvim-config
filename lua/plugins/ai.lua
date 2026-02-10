@@ -1,16 +1,22 @@
 return {
   {
     "zbirenbaum/copilot.lua",
-    event = "InsertEnter",
+    dependencies = { "copilotlsp-nvim/copilot-lsp" },
+    enabled = vim.g.git_editor ~= 1,
+    event = "VeryLazy",
     cmd = "Copilot",
-    enabled = false,
+    init = function()
+      vim.g.copilot_nes_debounce = 500
+    end,
     opts = {
-      filetypes = {
-        gitcommit = false,
+      nes = {
+        enabled = true,
+        keymap = {
+          accept_and_goto = "<Tab>",
+          accept = false,
+          dismiss = "<Esc>",
+        },
       },
-      server = {
-        type = "binary"
-      }
     }
   },
   { 
@@ -22,5 +28,5 @@ return {
     cmd = "CodeCompanion",
     opts = {},
     dependencies = { "nvim-lua/plenary.nvim" }
-  }
+  },
 }

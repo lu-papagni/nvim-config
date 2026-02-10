@@ -61,7 +61,7 @@ if vim.g.git_editor ~= 1 then
           "typescript-language-server",
           "basedpyright",
           "jdtls",
-          "copilot",
+          -- "copilot",
         }
       end
     }
