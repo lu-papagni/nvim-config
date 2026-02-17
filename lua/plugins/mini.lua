@@ -31,6 +31,37 @@ return {
     end
   },
   {
+    "nvim-mini/mini.pick",
+    dependencies = "nvim-mini/mini.extra",
+    version = false,
+    event = "VimEnter",
+    opts = {
+      mappings = {
+        move_down = "<C-j>",
+        move_up = "<C-k>",
+      }
+    },
+    config = function(_, opts)
+      require("mini.pick").setup(opts)
+      require("mini.extra").setup()
+
+      local map = vim.keymap.set
+      local builtin = require("mini.pick").builtin
+      local extra = require("mini.extra").pickers
+
+      map("n", "<Leader>/", function() extra.buf_lines { scope = "current" } end)
+      map("n", "<Leader>b", builtin.buffers)
+      map("n", "<Leader>fC", extra.colorschemes)
+      map("n", "<Leader>fT", function() builtin.grep { pattern = "^\\W+\\b(HACK|TODO|NOTE|BUG|ERROR|FIXME|FIX|INFO)" } end)
+      map("n", "<Leader>ff", builtin.files)
+      map("n", "<Leader>fh", builtin.help)
+      map("n", "<Leader>fk", extra.keymaps)
+      map("n", "<Leader>fs", builtin.grep_live)
+      map("n", "<Leader>ft", function() builtin.grep { pattern = "^\\W+\\bTODO" } end)
+      map("n", "<Leader>fu", function() builtin.grep { pattern = vim.fn.expand "<cword>" } end)
+    end
+  },
+  {
     "echasnovski/mini.ai",
     version = false,
     enabled = false,
