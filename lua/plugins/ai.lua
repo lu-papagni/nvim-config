@@ -17,16 +17,16 @@ return {
           dismiss = "<Esc>",
         },
       },
-    }
+    },
   },
-  { 
+  {
     "olimorris/codecompanion.nvim",
     enabled = false,
     keys = {
-      { "<F9>", "<cmd>CodeCompanionChat Toggle<cr>", desc = "Apre Copilot chat", mode = { "n", "v" } }
+      { "<F9>", "<cmd>CodeCompanionChat Toggle<cr>", desc = "Apre Copilot chat", mode = { "n", "v" } },
     },
     cmd = "CodeCompanion",
     opts = {},
-    dependencies = { "nvim-lua/plenary.nvim" }
+    dependencies = { "nvim-lua/plenary.nvim" },
   },
 }

@@ -2,7 +2,7 @@ local StatusLine = {}
 
 local function file_icon_and_name()
   local fname = vim.fn.expand("%:t")
-  if fname:len() > 0 then 
+  if fname:len() > 0 then
     local ok, icons = pcall(require, "mini.icons")
     if ok then
       local icon, hl, _ = icons.get("filetype", vim.bo.filetype)
@@ -15,12 +15,14 @@ end
 
 local function tools_info()
   local ft = vim.bo.filetype
-  if ft:len() == 0 then return "" end
+  if ft:len() == 0 then
+    return ""
+  end
 
   local lsp_name = nil
   local copilot_attached = false
 
-  for _, client in pairs(vim.lsp.get_clients { bufnr = 0 }) do
+  for _, client in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
     if client.name:lower() == "copilot" then
       copilot_attached = true
     elseif not lsp_name then
@@ -47,15 +49,14 @@ local function diagnostic_count()
   for i, count in ipairs(diags) do
     if count > 0 then
       local severity = vim.diagnostic.severity[i]
-      table.insert(status, string.format("%%#Diagnostic%s#%s:%d%%*", severity, severity:sub(1,1), count))
+      table.insert(status, string.format("%%#Diagnostic%s#%s:%d%%*", severity, severity:sub(1, 1), count))
     end
   end
   return table.concat(status, " ")
 end
 
-
 function StatusLine.tostring()
-  return table.concat {
+  return table.concat({
     "%<",
     file_icon_and_name(),
     " %#WarningMsg#%m%*",
@@ -63,7 +64,7 @@ function StatusLine.tostring()
     "%=",
     tools_info(),
     "%12.(%l%#NonText#:%*%L%)",
-  }
+  })
 end
 
 return StatusLine

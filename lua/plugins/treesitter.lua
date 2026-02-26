@@ -30,7 +30,7 @@ return {
       }
 
       -- WARNING: gitcommit parser needs a lot of memory to compile
-      if get_system_memory() >= 4*1024*1024 then
+      if get_system_memory() >= 4 * 1024 * 1024 then
         table.insert(ensure_installed, "gitcommit")
       else
         vim.notify("Not enough memory to compile `gitcommit`.", vim.log.levels.ERROR)
@@ -44,7 +44,8 @@ return {
         -- Abilita solo per le estensioni supportate dai parser
         -- NOTE: prima di usare un nuovo parser bisognerà installarlo con
         -- `:TSInstall` e riavviare neovim.
-        pattern = vim.iter(require("nvim-treesitter").get_installed())
+        pattern = vim
+          .iter(require("nvim-treesitter").get_installed())
           :map(vim.treesitter.language.get_filetypes)
           :flatten()
           :totable(),
@@ -54,7 +55,7 @@ return {
         callback = function()
           vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
           vim.treesitter.start()
-        end
+        end,
       })
     end,
   },
@@ -62,7 +63,7 @@ return {
     "windwp/nvim-ts-autotag",
     dependencies = "nvim-treesitter/nvim-treesitter",
     ft = { "html", "xml", "tsx", "ts", "js", "php", "markdown" },
-    config = true
+    config = true,
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
@@ -87,7 +88,7 @@ return {
           goto_next_start = {
             ["]f"] = "@function.outer",
             ["]c"] = "@class.outer",
-            ["]]"] = "@parameter.inner"
+            ["]]"] = "@parameter.inner",
           },
           goto_next_end = {
             ["]F"] = "@function.outer",
@@ -96,13 +97,13 @@ return {
           goto_previous_start = {
             ["[f"] = "@function.outer",
             ["[c"] = "@class.outer",
-            ["[["] = "@parameter.inner"
+            ["[["] = "@parameter.inner",
           },
           goto_previous_end = {
             ["[F"] = "@function.outer",
             ["[C"] = "@class.outer",
           },
-        }
+        },
       }
 
       for mapping, obj in pairs(textobjects.select) do
@@ -118,6 +119,6 @@ return {
           end)
         end
       end
-    end
+    end,
   },
 }

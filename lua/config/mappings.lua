@@ -14,7 +14,7 @@ local mappings = {
     "Copy in system clipboard",
     mode = { "n", "v" },
     keys = "<A-y>",
-    exec = "\"+y"
+    exec = "\"+y",
   },
   {
     "Paste from system clipboard",
@@ -64,8 +64,8 @@ local mappings = {
   {
     "Swap colorscheme between light and dark variant",
     keys = "<F12>",
-    exec = "<Cmd>let &bg = &bg == 'dark' ? 'light' : 'dark'<CR>"
-  }
+    exec = "<Cmd>let &bg = &bg == 'dark' ? 'light' : 'dark'<CR>",
+  },
 }
 
 if vim.g.neovide then
@@ -77,20 +77,26 @@ if vim.g.neovide then
     {
       "Put Neovide in fullscreen mode",
       keys = "<F11>",
-      exec = function() vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen end,
+      exec = function()
+        vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
+      end,
     },
     {
       "Increase Neovide background opacity",
       mode = { "n", "x", "i", "t" },
       keys = "<C-ScrollWheelUp>",
-      exec = function() vim.g.neovide_normal_opacity = new_opacity(0.05) end,
+      exec = function()
+        vim.g.neovide_normal_opacity = new_opacity(0.05)
+      end,
     },
     {
       "Decrease Neovide background opacity",
       mode = { "n", "x", "i", "t" },
       keys = "<C-ScrollWheelDown>",
-      exec = function() vim.g.neovide_normal_opacity = new_opacity(-0.05) end,
-    }
+      exec = function()
+        vim.g.neovide_normal_opacity = new_opacity(-0.05)
+      end,
+    },
   })
 end
 

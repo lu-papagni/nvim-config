@@ -1,7 +1,7 @@
 -- Generale
 vim.o.undofile = true
 vim.opt.path:append("**")
-vim.opt.wildignore:append { "*.o", "*.class", "*.jar", "*.obj", "*.tmp" }
+vim.opt.wildignore:append({ "*.o", "*.class", "*.jar", "*.obj", "*.tmp" })
 
 -- UI
 vim.wo.number = true
@@ -25,12 +25,12 @@ vim.o.expandtab = true
 vim.o.breakindent = true
 vim.o.smartindent = true
 
-vim.filetype.add {
+vim.filetype.add({
   extension = {
     tmpl = "gotmpl",
-    chezmoiignore = "gitignore"
-  }
-}
+    chezmoiignore = "gitignore",
+  },
+})
 
 -- Finestre
 vim.o.splitright = true
@@ -43,29 +43,29 @@ vim.o.foldlevelstart = 6
 vim.o.foldnestmax = 4
 
 -- Diagnostica
-vim.diagnostic.config {
+vim.diagnostic.config({
   virtual_text = {
     severity = {
       min = vim.diagnostic.severity.INFO,
-      max = vim.diagnostic.severity.WARN
+      max = vim.diagnostic.severity.WARN,
     },
-    current_line = true
+    current_line = true,
   },
   virtual_lines = {
     severity = {
-      min = vim.diagnostic.severity.ERROR
+      min = vim.diagnostic.severity.ERROR,
     },
-    current_line = true
-  }
-}
+    current_line = true,
+  },
+})
 
 -- Aspetto
-vim.o.winborder = "rounded"   -- Stile dei bordi dell'interfaccia. Vedi `vim.o.winborder`
+vim.o.winborder = "rounded" -- Stile dei bordi dell'interfaccia. Vedi `vim.o.winborder`
 
 -- netrw
-vim.g.netrw_winsize = 30      -- Larghezza finestre secondarie in %
-vim.g.netrw_preview = 1       -- Anteprima verticale
-vim.g.netrw_keepdir = 1       -- Sincronizza la directory di lavoro durante la navigazione
+vim.g.netrw_winsize = 30 -- Larghezza finestre secondarie in %
+vim.g.netrw_preview = 1 -- Anteprima verticale
+vim.g.netrw_keepdir = 1 -- Sincronizza la directory di lavoro durante la navigazione
 
 -- Neovide
 if vim.g.neovide then
@@ -84,20 +84,17 @@ end
 if vim.fn.has("win32") == 1 then
   -- Prova a usare PowerShell 7
   vim.o.shell = (vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell") .. ".exe"
-  vim.o.shellcmdflag = table.concat(
-    {
-      "-NoLogo",
-      "-ExecutionPolicy",
-      "RemoteSigned",
-      "-Command",
-      "[Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
-      "$PSStyle.Formatting.Error='';",
-      "$PSStyle.Formatting.ErrorAccent='';",
-      "$PSStyle.Formatting.Warning='';",
-      "$PSStyle.OutputRendering='PlainText';"
-    },
-    " "
-  )
+  vim.o.shellcmdflag = table.concat({
+    "-NoLogo",
+    "-ExecutionPolicy",
+    "RemoteSigned",
+    "-Command",
+    "[Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
+    "$PSStyle.Formatting.Error='';",
+    "$PSStyle.Formatting.ErrorAccent='';",
+    "$PSStyle.Formatting.Warning='';",
+    "$PSStyle.OutputRendering='PlainText';",
+  }, " ")
   vim.o.shellredir = "2>&1 | Out-File -Encoding utf8 %s; exit $LastExitCode"
   vim.o.shellpipe = "2>&1 | Out-File -Encoding utf8 %s; exit $LastExitCode"
   vim.o.shellquote = ""
@@ -126,12 +123,9 @@ if vim.fn.has("wsl") == 1 then
   }
 end
 
--- Kitty Terminal 
+-- Kitty Terminal
 if os.getenv("TERM") == "xterm-kitty" then
   vim.schedule(function()
-    vim.system(
-      { "kitten", "@", "set-spacing", "padding=0" },
-      { detach = true }
-    )
+    vim.system({ "kitten", "@", "set-spacing", "padding=0" }, { detach = true })
   end)
 end

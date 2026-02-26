@@ -44,9 +44,7 @@ local function mapSymbols(status, is_symlink)
   local symlinkSymbol = is_symlink and "↩" or ""
 
   -- Combine symlink symbol with Git status if both exist
-  local combinedSymbol = (symlinkSymbol .. gitSymbol)
-    :gsub("^%s+", "")
-    :gsub("%s+$", "")
+  local combinedSymbol = (symlinkSymbol .. gitSymbol):gsub("^%s+", ""):gsub("%s+$", "")
   -- Change the color of the symlink icon from "MiniDiffSignDelete" to something else
   local combinedHlGroup = is_symlink and "MiniDiffSignDelete" or gitHlGroup
 
@@ -66,11 +64,7 @@ local function fetchGitStatus(cwd, callback)
     end
   end
   ---@see vim.system
-  vim.system(
-    { "git", "status", "--ignored", "--porcelain" },
-    { text = true, cwd = clean_cwd },
-    on_exit
-  )
+  vim.system({ "git", "status", "--ignored", "--porcelain" }, { text = true, cwd = clean_cwd }, on_exit)
 end
 
 ---@param buf_id integer
@@ -102,20 +96,13 @@ local function updateMiniWithGit(buf_id, gitStatusMap)
         local line = vim.api.nvim_buf_get_lines(buf_id, i - 1, i, false)[1]
         -- Find the name position accounting for potential icons
         local nameStartCol = line:find(vim.pesc(entry.name)) or 0
-        
-        if nameStartCol > 0 then
-          vim.api.nvim_buf_set_extmark(
-            buf_id,
-            nsMiniFiles,
-            i - 1,
-            nameStartCol - 1,
-            {
-              end_col = nameStartCol + #entry.name - 1,
-              hl_group = hlGroup,
-            }
-          )
-        end
 
+        if nameStartCol > 0 then
+          vim.api.nvim_buf_set_extmark(buf_id, nsMiniFiles, i - 1, nameStartCol - 1, {
+            end_col = nameStartCol + #entry.name - 1,
+            hl_group = hlGroup,
+          })
+        end
       else
       end
     end
@@ -168,10 +155,7 @@ local function updateGitStatus(buf_id)
   -- local cwd = vim.fn.expand("%:p:h")
   local currentTime = os.time()
 
-  if
-    gitStatusCache[cwd]
-    and currentTime - gitStatusCache[cwd].time < cacheTimeout
-  then
+  if gitStatusCache[cwd] and currentTime - gitStatusCache[cwd].time < cacheTimeout then
     updateMiniWithGit(buf_id, gitStatusCache[cwd].statusMap)
   else
     fetchGitStatus(cwd, function(content)

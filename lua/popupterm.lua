@@ -3,7 +3,7 @@
 local M = {
   buf = nil,
   win = nil,
-  is_open = false
+  is_open = false,
 }
 
 function M.open(opts)

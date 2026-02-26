@@ -16,8 +16,8 @@ end
 autocmd("FileType", {
   pattern = "*",
   callback = function()
-    vim.opt.formatoptions:remove { "o" }
-  end
+    vim.opt.formatoptions:remove({ "o" })
+  end,
 })
 
 -- Evidenzia brevemente il testo quando viene copiato
@@ -26,7 +26,7 @@ autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("my-highlight-yank", { clear = true }),
   callback = function()
     vim.highlight.on_yank()
-  end
+  end,
 })
 
 -- Registra le associazioni tasti per il language server
@@ -42,8 +42,10 @@ autocmd("LspAttach", {
     map("n", "go", vim.lsp.buf.type_definition, opts)
     map("n", "gs", vim.lsp.buf.signature_help, opts)
     map("n", "gcr", vim.lsp.buf.rename, opts)
-    map({"n", "x"}, "gcf", function() vim.lsp.buf.format({ async = true }) end, opts)
-  end
+    map({ "n", "x" }, "gcf", function()
+      vim.lsp.buf.format({ async = true })
+    end, opts)
+  end,
 })
 
 -- Ridimensiona gli split con la finestra
@@ -53,7 +55,7 @@ autocmd("VimResized", {
     if #vim.api.nvim_list_wins() > 1 then
       vim.cmd.tabdo("wincmd =")
     end
-  end
+  end,
 })
 
 -- Autocomandi solo per Neovide
@@ -66,8 +68,10 @@ if vim.g.neovide then
     group = neovide_events,
     callback = function()
       local bg = vim.api.nvim_get_hl(0, { name = "Normal", link = false }).bg
-      if bg then vim.g.neovide_title_background_color = string.format("#%06x", bg) end
-    end
+      if bg then
+        vim.g.neovide_title_background_color = string.format("#%06x", bg)
+      end
+    end,
   })
 
   -- Directory di default
@@ -79,6 +83,6 @@ if vim.g.neovide then
       if vim.fn.argc() == 0 then
         vim.api.nvim_set_current_dir(vim.env.HOME)
       end
-    end
+    end,
   })
 end

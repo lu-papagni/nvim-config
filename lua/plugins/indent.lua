@@ -5,6 +5,6 @@ return {
     static = { enabled = false },
     scope = {
       highlights = { "BlinkIndentScope" },
-    }
-  }
+    },
+  },
 }

@@ -5,10 +5,10 @@
 --- `basedpyright`, a static type checker and language server for python
 
 local function set_python_path(path)
-  local clients = vim.lsp.get_clients {
+  local clients = vim.lsp.get_clients({
     bufnr = vim.api.nvim_get_current_buf(),
     name = "basedpyright",
-  }
+  })
   for _, client in ipairs(clients) do
     if client.settings then
       client.settings.python = vim.tbl_deep_extend("force", client.settings.python, { pythonPath = path })

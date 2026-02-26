@@ -7,16 +7,16 @@ return {
     cmdline = { enabled = false },
     completion = {
       menu = { auto_show = false },
-      ghost_text = { enabled = true }
+      ghost_text = { enabled = true },
     },
     sources = {
-      default = { "lsp", "snippets", },
+      default = { "lsp", "snippets" },
     },
     keymap = {
       ["<up>"] = false,
       ["<down>"] = false,
       ["<C-j>"] = { "select_next", "fallback" },
       ["<C-k>"] = { "select_prev", "fallback" },
-    }
-  }
+    },
+  },
 }
