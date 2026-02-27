@@ -7,6 +7,22 @@ local function get_system_memory()
   return tonumber(line:match("%d+"))
 end
 
+local function refresh_filetypes()
+  -- Enable treesitter only for filetypes supported by installed parsers
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = vim
+      .iter(require("nvim-treesitter").get_installed())
+      :map(vim.treesitter.language.get_filetypes)
+      :flatten()
+      :totable(),
+    group = vim.api.nvim_create_augroup("treesitter_support", { clear = true }),
+    callback = function()
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      vim.treesitter.start()
+    end,
+  })
+end
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -36,27 +52,14 @@ return {
         vim.notify("Not enough memory to compile `gitcommit`.", vim.log.levels.WARN)
       end
 
-      if vim.fn.executable("tree-sitter") == 1 then
-        require("nvim-treesitter").install(ensure_installed)
-      end
-
-      vim.api.nvim_create_autocmd("FileType", {
-        -- Abilita solo per le estensioni supportate dai parser
-        -- NOTE: prima di usare un nuovo parser bisognerà installarlo con
-        -- `:TSInstall` e riavviare neovim.
-        pattern = vim
-          .iter(require("nvim-treesitter").get_installed())
-          :map(vim.treesitter.language.get_filetypes)
-          :flatten()
-          :totable(),
-        group = vim.api.nvim_create_augroup("my-treesitter", { clear = true }),
-        -- WARNING: non usare mai `callback = vim.treesitter.start`
-        -- altrimenti ci saranno errori nell'apertura dei file.
-        callback = function()
-          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-          vim.treesitter.start()
-        end,
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "TSUpdate",
+        desc = "Refresh supported filetypes on :TSUpdate",
+        callback = refresh_filetypes
       })
+
+      require("nvim-treesitter").install(ensure_installed)
+      refresh_filetypes()
     end,
   },
   {
