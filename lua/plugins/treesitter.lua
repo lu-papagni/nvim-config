@@ -55,7 +55,7 @@ return {
       vim.api.nvim_create_autocmd("User", {
         pattern = "TSUpdate",
         desc = "Refresh supported filetypes on :TSUpdate",
-        callback = refresh_filetypes
+        callback = refresh_filetypes,
       })
 
       require("nvim-treesitter").install(ensure_installed)
