@@ -33,7 +33,7 @@ return {
       if get_system_memory() >= 4 * 1024 * 1024 then
         table.insert(ensure_installed, "gitcommit")
       else
-        vim.notify("Not enough memory to compile `gitcommit`.", vim.log.levels.ERROR)
+        vim.notify("Not enough memory to compile `gitcommit`.", vim.log.levels.WARN)
       end
 
       if vim.fn.executable("tree-sitter") == 1 then
