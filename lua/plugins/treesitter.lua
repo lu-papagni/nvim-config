@@ -57,13 +57,12 @@ return {
         desc = "Refresh supported filetypes on :TSUpdate",
         callback = refresh_filetypes,
       })
-      
+
       local treesitter = require("nvim-treesitter")
 
-      treesitter.install(ensure_installed)
-        :wait(3e5, function()
-          return #treesitter.get_installed() >= #ensure_installed
-        end, 1000)
+      treesitter.install(ensure_installed):wait(3e5, function()
+        return #treesitter.get_installed() >= #ensure_installed
+      end, 1000)
 
       refresh_filetypes()
     end,
