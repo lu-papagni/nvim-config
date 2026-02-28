@@ -31,18 +31,19 @@ return {
     lazy = false,
     config = function()
       local ensure_installed = {
+        "comment",
         "diff",
         "git_config",
-        "gitignore",
         "git_rebase",
+        "gitignore",
+        "gotmpl",
         "json",
         "lua",
         "markdown",
         "markdown_inline",
-        "toml",
         "vim",
         "vimdoc",
-        "comment",
+        "yaml",
       }
 
       -- WARNING: gitcommit parser needs a lot of memory to compile
