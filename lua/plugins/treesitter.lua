@@ -61,11 +61,11 @@ return {
 
       local treesitter = require("nvim-treesitter")
 
-      treesitter.install(ensure_installed):wait(3e5, function()
-        return #treesitter.get_installed() >= #ensure_installed
-      end, 1000)
-
-      refresh_filetypes()
+      treesitter.install(ensure_installed):await(function(err, success)
+        if not err and success then
+          refresh_filetypes()
+        end
+      end)
     end,
   },
   {
