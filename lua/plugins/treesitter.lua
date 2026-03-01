@@ -1,12 +1,3 @@
--- returns memory size in KB
-local function get_system_memory()
-  local meminfo = io.open("/proc/meminfo", "r")
-  assert(meminfo, "Could not read memory stats. Are you on Windows?")
-  local line = meminfo:read()
-  meminfo:close()
-  return tonumber(line:match("%d+"))
-end
-
 local function refresh_filetypes()
   -- Enable treesitter only for filetypes supported by installed parsers
   vim.api.nvim_create_autocmd("FileType", {
@@ -47,7 +38,7 @@ return {
       }
 
       -- WARNING: gitcommit parser needs a lot of memory to compile
-      if get_system_memory() >= 4 * 2 ^ 20 then
+      if vim.uv.get_available_memory() >= 4 * 2 ^ 30 then
         table.insert(ensure_installed, "gitcommit")
       else
         vim.notify("Not enough memory to compile `gitcommit`.", vim.log.levels.WARN)
