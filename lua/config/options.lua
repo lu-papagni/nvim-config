@@ -59,6 +59,14 @@ vim.diagnostic.config({
   },
 })
 
+-- LSP
+vim.lsp.enable({
+  "clangd",
+  "rust-analyzer",
+  "typescript-language-server",
+  "basedpyright",
+})
+
 -- Aspetto
 vim.o.winborder = "rounded" -- Stile dei bordi dell'interfaccia. Vedi `vim.o.winborder`
 
