@@ -39,6 +39,16 @@ autocmd("VimResized", {
   end,
 })
 
+autocmd("CmdlineChanged", {
+  desc = "Autocomplete command line",
+  pattern = ":",
+  callback = function()
+    if #vim.fn.getcmdline() > 1 then
+      vim.fn.wildtrigger()
+    end
+  end,
+})
+
 -- Autocomandi solo per Neovide
 if vim.g.neovide then
   local neovide_events = vim.api.nvim_create_augroup("NeovideEvents", { clear = true })
