@@ -2,7 +2,7 @@ return {
   {
     "folke/tokyonight.nvim",
     lazy = true,
-    opts = { cache = true }
+    opts = { cache = true },
   },
   {
     "catppuccin/nvim",
@@ -13,14 +13,15 @@ return {
     "rose-pine/neovim",
     name = "rose-pine",
     lazy = true,
-    opts = {}
+    opts = {},
   },
   {
-    "AlexvZyl/nordic.nvim",
+    -- Sylvan "Vimothy Chalamet" Franklin
+    "vague2k/vague.nvim",
     lazy = true,
   },
   {
     "savq/melange-nvim",
     lazy = true,
-  }
+  },
 }

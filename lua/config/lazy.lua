@@ -19,16 +19,10 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  spec = require("utils.lazyspec").use_optionals {
-    {
-      mod = "local",
-      optional = true,
-    },
-  },
+  spec = { { import = "plugins" } },
   install = { colorscheme = { "tokyonight", "default" } },
   checker = {
-    enabled = true,
-    frequency = 3600 * 24   -- Controlla una volta al giorno
+    enabled = false,
   },
   change_detection = {
     enabled = true,
@@ -50,6 +44,6 @@ require("lazy").setup({
   },
   ui = {
     border = vim.o.winborder,
-    title = " Lazy "
-  }
+    title = " Lazy ",
+  },
 })

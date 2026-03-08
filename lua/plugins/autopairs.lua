@@ -6,8 +6,8 @@ return {
       "TelescopePrompt",
       "spectre_panel",
       "minifiles",
-      "txt"
+      "txt",
     },
-    enable_bracket_in_quote = false
-  }
+    enable_bracket_in_quote = false,
+  },
 }
