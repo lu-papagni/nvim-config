@@ -1,10 +1,12 @@
 local autocmd = vim.api.nvim_create_autocmd
+local vimrc_events = vim.api.nvim_create_augroup("vimrc", { clear = true })
 local map = vim.keymap.set
 
 -- Resetta le impostazioni grafiche di Kitty
 if os.getenv("TERM") == "xterm-kitty" then
   autocmd("VimLeave", {
     desc = "Resetta l'aspetto del terminale all'uscita",
+    group = vimrc_events,
     callback = function()
       -- vim.system({ "kitten", "@", "set-colors", "--reset", "--all" }, { detach = true })
       vim.system({ "kitten", "@", "set-spacing", "padding=default" }, { detach = true })
@@ -15,6 +17,7 @@ end
 -- In Normal Mode, inserire una nuova riga dopo un commento non lo continua
 autocmd("FileType", {
   pattern = "*",
+  group = vimrc_events,
   callback = function()
     vim.opt.formatoptions:remove({ "o" })
   end,
@@ -23,7 +26,7 @@ autocmd("FileType", {
 -- Evidenzia brevemente il testo quando viene copiato
 autocmd("TextYankPost", {
   desc = "Evidenzia brevemente il testo durante la copia",
-  group = vim.api.nvim_create_augroup("my-highlight-yank", { clear = true }),
+  group = vimrc_events,
   callback = function()
     vim.highlight.on_yank()
   end,
@@ -32,6 +35,7 @@ autocmd("TextYankPost", {
 -- Ridimensiona gli split con la finestra
 autocmd("VimResized", {
   desc = "Ridimensiona gli split insieme alla finestra",
+  group = vimrc_events,
   callback = function()
     if #vim.api.nvim_list_wins() > 1 then
       vim.cmd.tabdo("wincmd =")
@@ -41,6 +45,7 @@ autocmd("VimResized", {
 
 autocmd("CmdlineChanged", {
   desc = "Autocomplete command line",
+  group = vimrc_events,
   pattern = ":",
   callback = function()
     if #vim.fn.getcmdline() > 1 then
