@@ -29,25 +29,6 @@ autocmd("TextYankPost", {
   end,
 })
 
--- Registra le associazioni tasti per il language server
-autocmd("LspAttach", {
-  desc = "Funzioni LSP",
-  callback = function(event)
-    local opts = { buffer = event.buf }
-
-    map("n", "K", vim.lsp.buf.hover, opts)
-    map("n", "gd", vim.lsp.buf.definition, opts)
-    map("n", "gD", vim.lsp.buf.declaration, opts)
-    map("n", "gi", vim.lsp.buf.implementation, opts)
-    map("n", "go", vim.lsp.buf.type_definition, opts)
-    map("n", "gs", vim.lsp.buf.signature_help, opts)
-    map("n", "gcr", vim.lsp.buf.rename, opts)
-    map({ "n", "x" }, "gcf", function()
-      vim.lsp.buf.format({ async = true })
-    end, opts)
-  end,
-})
-
 -- Ridimensiona gli split con la finestra
 autocmd("VimResized", {
   desc = "Ridimensiona gli split insieme alla finestra",
