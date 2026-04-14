@@ -2,7 +2,7 @@ return {
   {
     "zbirenbaum/copilot.lua",
     dependencies = { "copilotlsp-nvim/copilot-lsp" },
-    enabled = vim.g.git_editor ~= 1,
+    enabled = false,
     event = "VeryLazy",
     cmd = "Copilot",
     init = function()
