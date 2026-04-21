@@ -10,7 +10,6 @@ require("config.options")
 require("config.autocmd")
 
 vim.pack.add({
-  "gh:nvim-treesitter/nvim-treesitter",
   "gh:neovim/nvim-lspconfig",
   "gh:windwp/nvim-ts-autotag",
   "gh:nvim-treesitter/nvim-treesitter-textobjects",
