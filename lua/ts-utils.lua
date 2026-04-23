@@ -1,6 +1,7 @@
 local M = {}
 
 M.install_dir = vim.fs.joinpath(vim.fn.stdpath("data") .. "/site/parser")
+vim.fn.mkdir(M.install_dir, "p")
 
 local function log(msg, level)
   vim.schedule(function()
