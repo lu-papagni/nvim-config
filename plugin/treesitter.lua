@@ -1,11 +1,11 @@
-local treesitter = require("ts-utils")
+local tspack = require("treesitter-pack")
 
 local function register_filetypes()
   -- Enable treesitter only for filetypes supported by installed parsers
   vim.api.nvim_create_autocmd("FileType", {
     -- stylua: ignore
     pattern = vim
-      .iter(treesitter.get())
+      .iter(tspack.get())
       :map(vim.treesitter.language.get_filetypes)
       :flatten()
       :totable(),
@@ -19,12 +19,12 @@ end
 
 local ensure_installed = {
   { lang = { "tsx", "typescript" }, src = "gh:tree-sitter/tree-sitter-typescript" },
-  { lang = "bash", src = "gh:tree-sitter/tree-sitter-bash" },
-  { lang = "comment", src = "gh:stsewd/tree-sitter-comment" },
+  { src = "gh:tree-sitter/tree-sitter-bash" },
+  { src = "gh:stsewd/tree-sitter-comment" },
   { lang = "gotmpl", src = "gh:ngalaiko/tree-sitter-go-template" },
-  { lang = "javascript", src = "gh:tree-sitter/tree-sitter-javascript" },
-  { lang = "python", src = "gh:tree-sitter/tree-sitter-python" },
-  { lang = "yaml", src = "gh:tree-sitter-grammars/tree-sitter-yaml" },
+  { src = "gh:tree-sitter/tree-sitter-javascript" },
+  { src = "gh:tree-sitter/tree-sitter-python" },
+  { src = "gh:tree-sitter-grammars/tree-sitter-yaml" },
 }
 
 -- WARNING: gitcommit parser needs a lot of memory to compile
@@ -45,7 +45,7 @@ vim.schedule(function()
       registry.get_package("tree-sitter-cli"):install()
     end
   end
-  treesitter.add(ensure_installed)
+  tspack.add(ensure_installed)
   register_filetypes()
 end)
 
