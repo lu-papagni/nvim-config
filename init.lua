@@ -8,6 +8,7 @@ end
 
 require("config.options")
 require("config.autocmd")
+require("config.usercmd")
 
 vim.pack.add({
   "gh:lu-papagni/treesitter-pack",
