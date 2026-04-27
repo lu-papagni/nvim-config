@@ -68,6 +68,7 @@ vim.lsp.enable({
   "rust-analyzer",
   "typescript-language-server",
   "basedpyright",
+  "emmylua_ls",
 })
 
 -- Aspetto
