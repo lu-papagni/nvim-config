@@ -62,7 +62,7 @@ function StatusLine.tostring()
   local language = language_info()
   return table.concat({
     "%<",
-    file_info ..  " %#WarningMsg#%m%*",
+    file_info .. " %#WarningMsg#%m%*",
     "%=",
     diagnostics,
     language,
