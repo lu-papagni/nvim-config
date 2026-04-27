@@ -72,6 +72,7 @@ end)
 map("n", "<Leader>fu", function()
   builtin.grep({ pattern = vim.fn.expand("<cword>") })
 end)
+map("n", "<Leader>fd", extra.git_hunks)
 
 -- mini.diff
 
