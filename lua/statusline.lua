@@ -19,28 +19,20 @@ local function language_info()
     return ""
   end
 
-  local lsp_name = nil
-  local copilot_attached = false
-
-  for _, client in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
-    if client.name:lower() == "copilot" then
-      copilot_attached = true
-    elseif not lsp_name then
-      lsp_name = client.name
-    end
-  end
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  local lsp_names = vim
+    .iter(clients)
+    :map(function(c)
+      return c.name
+    end)
+    :totable()
 
   local parts = { ft }
-  if lsp_name then
-    table.insert(parts, string.format("%%#NonText#@%%#Special#%s%%*", lsp_name))
+  if #lsp_names > 0 then
+    table.insert(parts, string.format("%%#NonText#@%%#Special#%s%%*", lsp_names[1]))
   end
 
-  local result = string.format("[%s]", table.concat(parts, ""))
-  if copilot_attached then
-    result = result .. " \u{f4b8}"
-  end
-
-  return result
+  return string.format("[%s]", table.concat(parts, ""))
 end
 
 local function diagnostic_count()
