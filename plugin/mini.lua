@@ -8,14 +8,6 @@ local files = require("mini.files")
 
 files.setup({
   options = { use_as_default_explorer = true },
-  content = {
-    prefix = function(entry)
-      if entry.fs_type == "directory" then
-        return "📁 ", "MiniFilesDirectory"
-      end
-      return "📄 ", "MiniFilesFile"
-    end,
-  },
 })
 
 require("minifiles-git")
@@ -33,19 +25,6 @@ pick.setup({
   mappings = {
     move_down = "<C-j>",
     move_up = "<C-k>",
-  },
-  source = {
-    show = function(buf_id, items, query, opts)
-      opts = vim.tbl_deep_extend("force", {
-        show_icons = true,
-        icons = {
-          directory = "📁 ",
-          file = "📄 ",
-          none = "  ",
-        },
-      }, opts or {})
-      return pick.default_show(buf_id, items, query, opts)
-    end,
   },
 })
 
