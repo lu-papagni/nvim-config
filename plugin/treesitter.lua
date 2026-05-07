@@ -27,13 +27,6 @@ local ensure_installed = {
   { src = "gh:tree-sitter-grammars/tree-sitter-yaml" },
 }
 
--- WARNING: gitcommit parser needs a lot of memory to compile
-if vim.uv.get_available_memory() >= 4 * 2 ^ 30 then
-  table.insert(ensure_installed, { lang = "gitcommit", src = "gh:gbprod/tree-sitter-gitcommit" })
-else
-  vim.notify("Not enough memory to compile `gitcommit`.", vim.log.levels.WARN)
-end
-
 vim.schedule(function()
   if vim.fn.executable("tree-sitter") ~= 1 then
     local ok, registry = pcall(require, "mason-registry")
