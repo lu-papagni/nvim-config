@@ -11,7 +11,6 @@ require("config.autocmd")
 require("config.usercmd")
 
 vim.pack.add({
-  -- "https://github.com/lu-papagni/treesitter-pack",
   "https://github.com/neovim/nvim-lspconfig",
   "https://github.com/windwp/nvim-ts-autotag",
   "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
