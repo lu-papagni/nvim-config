@@ -12,6 +12,10 @@ vim.o.wrap = false
 vim.o.cursorline = true
 vim.o.cursorlineopt = "line"
 vim.o.statusline = "%{%v:lua.require'statusline'.tostring()%}"
+vim.o.wildmode = "noselect:lastused,full"
+vim.o.wildoptions = "pum,fuzzy"
+vim.o.pumheight = 10
+vim.o.completeopt = "menu,menuone,noinsert,fuzzy"
 
 -- Ricerca
 vim.o.hlsearch = false
@@ -57,6 +61,15 @@ vim.diagnostic.config({
     },
     current_line = true,
   },
+})
+
+-- LSP
+vim.lsp.enable({
+  "clangd",
+  "rust-analyzer",
+  "typescript-language-server",
+  "basedpyright",
+  "emmylua_ls",
 })
 
 -- Aspetto

@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 vim.g.mapleader = vim.keycode("<Space>")
 
 for _, map in ipairs(require("config.mappings")) do
@@ -7,5 +9,21 @@ end
 require("config.options")
 require("config.autocmd")
 require("config.usercmd")
-require("config.lsp")
-require("config.lazy")
+
+-- Disabled built-in plugins
+vim.g.no_python_maps = true
+
+vim.pack.add({
+  "https://github.com/neovim/nvim-lspconfig",
+  "https://github.com/windwp/nvim-ts-autotag",
+  "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+  "https://github.com/nvim-mini/mini.icons",
+  "https://github.com/nvim-mini/mini.files",
+  "https://github.com/nvim-mini/mini.pick",
+  "https://github.com/nvim-mini/mini.extra",
+  "https://github.com/echasnovski/mini.diff",
+  "https://github.com/mason-org/mason.nvim",
+  "https://github.com/saghen/blink.indent",
+  { src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
+  "https://github.com/savq/melange-nvim",
+})

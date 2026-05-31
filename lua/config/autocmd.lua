@@ -1,10 +1,12 @@
 local autocmd = vim.api.nvim_create_autocmd
+local vimrc_events = vim.api.nvim_create_augroup("vimrc", { clear = true })
 local map = vim.keymap.set
 
 -- Resetta le impostazioni grafiche di Kitty
 if os.getenv("TERM") == "xterm-kitty" then
   autocmd("VimLeave", {
     desc = "Resetta l'aspetto del terminale all'uscita",
+    group = vimrc_events,
     callback = function()
       -- vim.system({ "kitten", "@", "set-colors", "--reset", "--all" }, { detach = true })
       vim.system({ "kitten", "@", "set-spacing", "padding=default" }, { detach = true })
@@ -15,6 +17,7 @@ end
 -- In Normal Mode, inserire una nuova riga dopo un commento non lo continua
 autocmd("FileType", {
   pattern = "*",
+  group = vimrc_events,
   callback = function()
     vim.opt.formatoptions:remove({ "o" })
   end,
@@ -23,38 +26,54 @@ autocmd("FileType", {
 -- Evidenzia brevemente il testo quando viene copiato
 autocmd("TextYankPost", {
   desc = "Evidenzia brevemente il testo durante la copia",
-  group = vim.api.nvim_create_augroup("my-highlight-yank", { clear = true }),
+  group = vimrc_events,
   callback = function()
     vim.highlight.on_yank()
-  end,
-})
-
--- Registra le associazioni tasti per il language server
-autocmd("LspAttach", {
-  desc = "Funzioni LSP",
-  callback = function(event)
-    local opts = { buffer = event.buf }
-
-    map("n", "K", vim.lsp.buf.hover, opts)
-    map("n", "gd", vim.lsp.buf.definition, opts)
-    map("n", "gD", vim.lsp.buf.declaration, opts)
-    map("n", "gi", vim.lsp.buf.implementation, opts)
-    map("n", "go", vim.lsp.buf.type_definition, opts)
-    map("n", "gs", vim.lsp.buf.signature_help, opts)
-    map("n", "gcr", vim.lsp.buf.rename, opts)
-    map({ "n", "x" }, "gcf", function()
-      vim.lsp.buf.format({ async = true })
-    end, opts)
   end,
 })
 
 -- Ridimensiona gli split con la finestra
 autocmd("VimResized", {
   desc = "Ridimensiona gli split insieme alla finestra",
+  group = vimrc_events,
   callback = function()
     if #vim.api.nvim_list_wins() > 1 then
       vim.cmd.tabdo("wincmd =")
     end
+  end,
+})
+
+autocmd("CmdlineChanged", {
+  desc = "Autocomplete command line",
+  group = vimrc_events,
+  pattern = ":",
+  callback = function()
+    if #vim.fn.getcmdline() > 1 then
+      vim.fn.wildtrigger()
+    end
+  end,
+})
+
+autocmd("FileType", {
+  desc = "Enable tree-sitter parser",
+  group = vimrc_events,
+  pattern = vim
+    .iter(vim.fs.find(function(name, _)
+      return name:match("^.*%.so$")
+    end, {
+      limit = math.huge,
+      type = "file",
+      path = vim.fs.joinpath(vim.fn.stdpath("data"), "site/parser"),
+    }) --[[@as IterMod]])
+    :map(function(parser)
+      return vim.fs.basename(parser)
+    end)
+    :map(function(parser)
+      return (parser:gsub("%.so$", ""))
+    end)
+    :totable(),
+  callback = function(ctx)
+    pcall(vim.treesitter.start, ctx.buf)
   end,
 })
 
