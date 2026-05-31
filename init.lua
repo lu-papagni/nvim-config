@@ -11,7 +11,7 @@ require("config.autocmd")
 require("config.usercmd")
 
 -- Disabled built-in plugins
-vim.g.no_plugin_maps = true
+vim.g.no_python_maps = true
 
 vim.pack.add({
   "https://github.com/neovim/nvim-lspconfig",
