@@ -15,6 +15,7 @@ vim.o.statusline = "%{%v:lua.require'statusline'.tostring()%}"
 vim.o.wildmode = "noselect:lastused,full"
 vim.o.wildoptions = "pum,fuzzy"
 vim.o.pumheight = 10
+vim.o.completeopt = "menu,menuone,noinsert,fuzzy"
 
 -- Ricerca
 vim.o.hlsearch = false
