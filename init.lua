@@ -10,6 +10,9 @@ require("config.options")
 require("config.autocmd")
 require("config.usercmd")
 
+-- Disabled built-in plugins
+vim.g.no_plugin_maps = true
+
 vim.pack.add({
   "https://github.com/neovim/nvim-lspconfig",
   "https://github.com/windwp/nvim-ts-autotag",
