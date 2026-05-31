@@ -54,6 +54,29 @@ autocmd("CmdlineChanged", {
   end,
 })
 
+autocmd("FileType", {
+  desc = "Enable tree-sitter parser",
+  group = vimrc_events,
+  pattern = vim
+    .iter(vim.fs.find(function(name, _)
+      return name:match("^.*%.so$")
+    end, {
+      limit = math.huge,
+      type = "file",
+      path = vim.fs.joinpath(vim.fn.stdpath("data"), "site/parser"),
+    }) --[[@as IterMod]])
+    :map(function(parser)
+      return vim.fs.basename(parser)
+    end)
+    :map(function(parser)
+      return (parser:gsub("%.so$", ""))
+    end)
+    :totable(),
+  callback = function(ctx)
+    pcall(vim.treesitter.start, ctx.buf)
+  end,
+})
+
 -- Autocomandi solo per Neovide
 if vim.g.neovide then
   local neovide_events = vim.api.nvim_create_augroup("NeovideEvents", { clear = true })
