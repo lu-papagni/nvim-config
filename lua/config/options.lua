@@ -18,7 +18,6 @@ vim.o.pumheight = 10
 vim.o.completeopt = "menu,menuone,noinsert,fuzzy"
 
 -- Ricerca
-vim.o.hlsearch = false
 vim.o.ignorecase = true
 vim.o.smartcase = true
 

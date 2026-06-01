@@ -27,3 +27,5 @@ vim.pack.add({
   { src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
   "https://github.com/savq/melange-nvim",
 })
+
+vim.cmd.packadd("nohlsearch")
