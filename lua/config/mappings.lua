@@ -73,7 +73,7 @@ if vim.g.neovide then
     return math.min(1.0, math.max(0, vim.g.neovide_normal_opacity + step))
   end
 
-  vim.list_extend(keymaps, {
+  vim.list_extend(mappings, {
     {
       "Put Neovide in fullscreen mode",
       keys = "<F11>",
