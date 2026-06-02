@@ -77,6 +77,17 @@ autocmd("FileType", {
   end,
 })
 
+autocmd("TermRequest", {
+  desc = "Update terminal name with current process",
+  group = vimrc_events,
+  callback = function(ctx)
+    local bufname = vim.fn.expand("%")
+    local suffix = bufname:match("^term://(.*)")
+    local new_name = bufname:gsub(suffix, vim.b.term_title)
+    vim.api.nvim_buf_set_name(ctx.buf, new_name)
+  end,
+})
+
 -- Autocomandi solo per Neovide
 if vim.g.neovide then
   local neovide_events = vim.api.nvim_create_augroup("NeovideEvents", { clear = true })
