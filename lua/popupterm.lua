@@ -1,4 +1,4 @@
--- Adattato da https://github.com/radleylewis/nvim-lite/tree/youtube_demo
+-- Adapted from https://github.com/radleylewis/nvim-lite/tree/youtube_demo
 
 local M = {
   buf = nil,

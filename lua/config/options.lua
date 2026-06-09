@@ -1,4 +1,4 @@
--- Generale
+-- General
 vim.o.undofile = true
 vim.opt.path:append("**")
 vim.opt.wildignore:append({ "*.o", "*.class", "*.jar", "*.obj", "*.tmp" })
@@ -20,11 +20,11 @@ vim.o.pumheight = 10
 vim.o.omnifunc = "v:lua.vim.lsp.omnifunc"
 vim.o.completeopt = "menu,menuone,noinsert,fuzzy"
 
--- Ricerca
+-- Search
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Formattazione
+-- Formatting
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.expandtab = true
@@ -38,7 +38,7 @@ vim.filetype.add({
   },
 })
 
--- Finestre
+-- Windows
 vim.o.splitright = true
 vim.o.splitbelow = true
 
@@ -48,7 +48,7 @@ vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.foldlevelstart = 6
 vim.o.foldnestmax = 4
 
--- Diagnostica
+-- Diagnostics
 vim.diagnostic.config({
   virtual_text = {
     severity = {
@@ -74,13 +74,13 @@ vim.lsp.enable({
   "emmylua_ls",
 })
 
--- Aspetto
-vim.o.winborder = "rounded" -- Stile dei bordi dell'interfaccia. Vedi `vim.o.winborder`
+-- Appearance
+vim.o.winborder = "rounded" -- Border style. See `vim.o.winborder`
 
 -- netrw
-vim.g.netrw_winsize = 30 -- Larghezza finestre secondarie in %
-vim.g.netrw_preview = 1 -- Anteprima verticale
-vim.g.netrw_keepdir = 1 -- Sincronizza la directory di lavoro durante la navigazione
+vim.g.netrw_winsize = 30 -- Secondary window width in %
+vim.g.netrw_preview = 1 -- Vertical preview
+vim.g.netrw_keepdir = 1 -- Keep working directory in sync while browsing
 
 -- Neovide
 if vim.g.neovide then
@@ -95,9 +95,9 @@ if vim.g.neovide then
   vim.g.neovide_hide_mouse_when_typing = true
 end
 
--- Solo su Windows
+-- Windows only
 if vim.fn.has("win32") == 1 then
-  -- Prova a usare PowerShell 7
+  -- Try to use PowerShell 7
   vim.o.shell = (vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell") .. ".exe"
   vim.o.shellcmdflag = table.concat({
     "-NoLogo",
@@ -116,7 +116,7 @@ if vim.fn.has("win32") == 1 then
   vim.o.shellxquote = ""
 end
 
--- Solo su WSL
+-- WSL only
 if vim.fn.has("wsl") == 1 then
   local function wsl_paste()
     return {
